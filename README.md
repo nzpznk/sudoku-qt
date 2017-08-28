@@ -1,2 +1,2 @@
-# soduku-qt
-A qt version soduku game.
+# sudoku-qt
+A qt version sudoku game.
