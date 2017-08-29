@@ -7,13 +7,13 @@
 #include <QSignalMapper>
 #include <QDebug>
 
-class gameboard : public QWidget
+class GameBoard : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit gameboard(QWidget *parent = 0);
-	~gameboard();
+	explicit GameBoard(QWidget *parent = 0);
+	~GameBoard();
 
 signals:
 	void setNumber(const int val, const int row, const int col);

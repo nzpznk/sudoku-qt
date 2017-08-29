@@ -2,7 +2,7 @@
 #include <QRegExpValidator>
 #include <QRegExp>
 
-gameboard::gameboard(QWidget *parent) :
+GameBoard::GameBoard(QWidget *parent) :
 	QWidget(parent)
 {
 	init();
@@ -10,19 +10,18 @@ gameboard::gameboard(QWidget *parent) :
 
 
 
-gameboard::~gameboard()
+GameBoard::~GameBoard()
 {
 
 }
 
-void gameboard::sendChangeSignal(int rank)
+void GameBoard::sendChangeSignal(int rank)
 {
 	qDebug() << "( " << rank / 9 << ", " << rank % 9  << " ) changed to " << m_lineEdit[rank]->text();
 	emit setNumber(m_lineEdit[rank]->text().toInt(), rank / 9, rank % 9);
 }
 
-
-void gameboard::init() {
+void GameBoard::init() {
 	m_lineEdit = new QLineEdit* [9 * 9];
 	QGridLayout* gridLayout = new QGridLayout(this);
 

@@ -24,8 +24,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    gameboard.cpp
+        UI/mainwindow.cpp \
+    UI/gameboard.cpp \
+    solver/solver.cpp \
+    logic/logiccontroller.cpp \
+    solver/dancinglinks.cpp \
+    loader/loader.cpp \
+    loader/fileloader.cpp \
+    test/test.cpp \
+    test/logger.cpp \
+    logic/logiccontroller.cpp \
+    solver/dancinglinks.cpp \
+    solver/solver.cpp
 
-HEADERS  += mainwindow.h \
-    gameboard.h
+HEADERS  += UI/mainwindow.h \
+    UI/gameboard.h \
+    solver/solver.h \
+    logic/logiccontroller.h \
+    solver/dancinglinks.h \
+    loader/loader.h \
+    loader/fileloader.h \
+    test/logger.h \
+    logic/logiccontroller.h \
+    solver/dancinglinks.h \
+    solver/solver.h
+
+INCLUDEPATH += ./test/
+    ./loader/
+    ./logic/
+    ./solver/
+    ./UI/
