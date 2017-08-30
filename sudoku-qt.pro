@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     test/logger.cpp \
     logic/logiccontroller.cpp \
     solver/dancinglinks.cpp \
-    solver/solver.cpp
+    solver/solver.cpp \
+    solver/listnode.cpp \
+    solver/stdsudokunodescontainer.cpp
 
 HEADERS  += UI/mainwindow.h \
     UI/gameboard.h \
@@ -47,7 +49,10 @@ HEADERS  += UI/mainwindow.h \
     test/logger.h \
     logic/logiccontroller.h \
     solver/dancinglinks.h \
-    solver/solver.h
+    solver/solver.h \
+    solver/listnode.h \
+    solver/dlnodescontainer.h \
+    solver/stdsudokunodescontainer.h
 
 INCLUDEPATH += ./test/
     ./loader/
