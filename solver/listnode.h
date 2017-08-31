@@ -1,22 +1,19 @@
 ﻿#ifndef LISTNODE_H
 #define LISTNODE_H
 
-
-class ListNode
+struct ListNode
 {
 public:
-	ListNode();
-	void remove();
-	void unremove();
+	ListNode() : removed(false), size(0) {}
 
 public:
 	ListNode* up;
 	ListNode* down;
 	ListNode* left;
 	ListNode* right;
-	int size;
 	int rowNum;
 	int colNum;
+	int size;
 	bool removed;
 };
 

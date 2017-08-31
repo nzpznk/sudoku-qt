@@ -36,7 +36,6 @@ SOURCES += main.cpp\
     logic/logiccontroller.cpp \
     solver/dancinglinks.cpp \
     solver/solver.cpp \
-    solver/listnode.cpp \
     solver/stdsudokunodescontainer.cpp \
     solver/dlnodescontainer.cpp
 
