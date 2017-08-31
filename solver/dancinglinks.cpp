@@ -73,7 +73,7 @@ QVector<int> DancingLinks::Col(int rank)
 QVector<int> DancingLinks::Row(int rank)
 {
 	qDebug() << "Row(" << rank << ") called";
-	QVector<ListNode*> rowNodeVec = nodes->getNodes(rank);
+	QVector<ListNode*> rowNodeVec = nodes->getRow(rank);
 	QVector<int> ans;
 	for(ListNode* tmp : rowNodeVec) {
 		ans.push_back(tmp->colNum);
@@ -111,16 +111,9 @@ void DancingLinks::backTrack()
 	ListNode* tmp = nullptr;
 	m_rowStack->pop();
 	m_colStack->pop();
-	while(!lastRows->empty()) {
-		tmp = lastRows->top();
-		tmp->up->down = tmp;
-		tmp->down->up->tmp;
-	}
-	while(!lastCols->empty()) {
-		tmp = lastCols->top();
-		tmp->left->right = tmp;
-		tmp->right->left = tmp;
-	}
+	nodes->restoreRow(lastRows);
+	nodes->restoreCol(lastCols);
+
 	delete lastRows;
 	delete lastCols;
 }
@@ -132,28 +125,10 @@ QPair<int, QPair<int, int> > DancingLinks::getVal(int row, int col)
 
 void DancingLinks::removeRow(int row, QStack<ListNode*>* s)
 {
-	QVector<ListNode*> rowVec = nodes->getNodes(row);
-	qDebug() << "begin remove row " << rowVec[0]->rowNum;
-	for(ListNode* tmp : rowVec) {
-		if(tmp->removed) {
-			qDebug() << "list node" << "(row, col) = (" << tmp->rowNum << "," << tmp->colNum << ") removed twice";
-		}
-		tmp->up->down = tmp->down;
-		tmp->down->up = tmp->up;
-		tmp->removed = true;
-		if(s) s->push(tmp);
-	}
-	qDebug() << "removed row" << row;
+	nodes->removeRow(row, s);
 }
 
 void DancingLinks::removeCol(int col, QStack<ListNode*>* s)
 {
-	ListNode* tmp = nodes->getCol(col);
-	qDebug() << "begin remove column" << col;
-	if(tmp->removed) {
-		qDebug() << "column" << tmp->colNum << "removed twice";
-	}
-	tmp->left->right = tmp->right;
-	tmp->right->left = tmp->left;
-	qDebug() << "removed column" << tmp->colNum;
+	nodes->removeCol(col, s);
 }

@@ -6,14 +6,7 @@
 class StdSudokuNodesContainer : public DLNodesContainer
 {
 public:
-	StdSudokuNodesContainer(const QVector< QVector<int> >& mat);
-
-	/**
-	 * @brief getNodes
-	 * @param row row number in DancingLinks
-	 * @return the Nodes in the same row
-	 */
-	virtual QVector<ListNode*> getNodes(int row, int col = 0);
+	StdSudokuNodesContainer(const QVector< QVector<int> >& mat); // finish
 
 	/**
 	 * @brief getNumber
@@ -21,27 +14,24 @@ public:
 	 * @param col
 	 * @return the value and position correspond with the position in dancinglinks
 	 */
-	virtual QPair< int, QPair<int, int> > getNumber(int row, int col = 0);
+	virtual QPair< int, QPair<int, int> > getNumber(int row, int col = 0); // finish
 
-	virtual ListNode* colHeader();
+	virtual ListNode* getCol(int col); // finish
 
-	virtual ListNode* colTailer();
-
-	virtual ListNode* getCol(int col);
+	virtual QVector<ListNode*> getRow(int row); // finish
 
 	/**
 	 * @brief ~StdSudokuNodesContainer
 	 */
-	virtual ~StdSudokuNodesContainer();
-
-private:
-	void constructDL();
+	virtual ~StdSudokuNodesContainer(); // finish
 
 private:
 	const int SIZE = 9;
+	int gridNum;
 	int rowSize;
 	int colSize;
-	ListNode** colNodes;
+	ListNode** m_nodes; // (n^3 row) x (restrict col)
+	ListNode* m_colNodes; // array of column header
 };
 
 #endif // STDSUDOKUNODESCONTAINER_H

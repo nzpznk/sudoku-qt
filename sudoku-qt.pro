@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     solver/dancinglinks.cpp \
     solver/solver.cpp \
     solver/listnode.cpp \
-    solver/stdsudokunodescontainer.cpp
+    solver/stdsudokunodescontainer.cpp \
+    solver/dlnodescontainer.cpp
 
 HEADERS  += UI/mainwindow.h \
     UI/gameboard.h \
