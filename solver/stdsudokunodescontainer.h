@@ -6,24 +6,17 @@
 class StdSudokuNodesContainer : public DLNodesContainer
 {
 public:
-	StdSudokuNodesContainer(const QVector< QVector<int> >& mat); // finish
+	StdSudokuNodesContainer(const QVector< QVector<int> >&); // finish
 
-	/**
-	 * @brief getNumber
-	 * @param row
-	 * @param col
-	 * @return the value and position correspond with the position in dancinglinks
-	 */
-	virtual QPair< int, QPair<int, int> > getNumber(int row, int col = 0); // finish
+	QPair< int, QPair<int, int> > getNumber(int row, int col = 0); // finish
 
-	virtual ListNode* getCol(int col); // finish
+	ListNode* getCol(int col); // finish
 
-	virtual QVector<ListNode*> getRow(int row); // finish
+	QVector<ListNode*> getRow(int row, int col = 0); // finish
 
-	/**
-	 * @brief ~StdSudokuNodesContainer
-	 */
-	virtual ~StdSudokuNodesContainer(); // finish
+	~StdSudokuNodesContainer(); // finish
+
+	int getRowNum(int val, int mRow, int mCol);
 
 private:
 	const int SIZE = 9;

@@ -12,6 +12,7 @@ public:
 
 public slots:
 	void logmat(QVector< QVector<int>* >* mat);
+	void log(int integer);
 
 };
 

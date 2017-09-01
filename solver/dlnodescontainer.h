@@ -10,7 +10,7 @@ class DLNodesContainer
 {
 public:
 	DLNodesContainer();
-	virtual ~DLNodesContainer() = 0;
+	virtual ~DLNodesContainer();
 	virtual QVector<ListNode*> getRow(int row, int col = 0) = 0;
 	virtual ListNode* getCol(int col) = 0;
 	virtual QPair< int, QPair<int, int> > getNumber(int row, int col) = 0;
@@ -21,8 +21,8 @@ public:
 	virtual void removeCol(int col, QStack<ListNode*>* s = nullptr);
 	virtual void restoreRow(QStack<ListNode*>* lastRows);
 	virtual void restoreCol(QStack<ListNode*>* LastCols);
-	virtual ListNode* colHeader() { return m_colHeader; }
-	virtual ListNode* colTailer() { return m_colTailer; }
+	virtual ListNode* colHeader();
+	virtual ListNode* colTailer();
 
 protected:
 	ListNode* m_colHeader;

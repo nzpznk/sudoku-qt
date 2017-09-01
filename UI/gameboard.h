@@ -2,10 +2,13 @@
 #define GAMEBOARD_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include <QGridLayout>
-#include <QSignalMapper>
-#include <QDebug>
+
+#include "sudokugrid.h"
+// #include "inputboard.h"
+
+namespace Ui {
+class GameBoard;
+}
 
 class GameBoard : public QWidget
 {
@@ -16,14 +19,22 @@ public:
 	~GameBoard();
 
 signals:
-	void setNumber(const int val, const int row, const int col);
+	void setNum(int rank, int val);
+	void remNum(int rank);
+	void check();
 
-private slots:
-	void sendChangeSignal(int);
+public slots: // connect with logic
+	void showWrong(const QVector<int>&); // show which grids are misfilled
+	void showAnswer(const QVector< QPair<int, int> >&); // show answer of the problem
+
+public slots: // connect with GUI
+	void chooseGrid(int rank); // choose a grid
+	void undo();
+	void redo();
 
 private:
-	void init();
-	QLineEdit** m_lineEdit;
+	QList< QPair<QString, int> > operHistory;
+	Ui::GameBoard *ui;
 };
 
 #endif // GAMEBOARD_H

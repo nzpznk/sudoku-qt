@@ -15,9 +15,9 @@ QVector< QVector< QVector<int> > > Solver::operator()(const QVector<QVector<int>
 {
 	// solve at most 2 answers
 	QVector < QVector< QVector<int> > > ans;
-
-	DancingLinks dl(mat);
-	recSolve(dl, mat, ans);
+	QVector<QVector<int> > mat_bac = mat;
+	DancingLinks dl(mat_bac);
+	recSolve(&dl, mat_bac, ans);
 	return ans;
 }
 
@@ -46,21 +46,21 @@ int Solver::cntGivenNumber(const QVector<QVector<int> >& mat)
  * @param dl
  * @return true if the solution exists
  */
-void Solver::recSolve(DancingLinks& dl, QVector< QVector<int> >& mat, QVector < QVector< QVector<int> > >& ans)
+void Solver::recSolve(DancingLinks* dl, QVector< QVector<int> >& mat, QVector < QVector< QVector<int> > >& ans)
 {
 	if(ans.size() > 1) return;
-	if(dl.empty()) {
+	if(dl->empty()) {
 		ans.push_back(mat);
 		return;
 	}
-	int minCol = dl.chooseCol();
+	int minCol = dl->chooseCol();
 	if(minCol == -1) return; // failed to find an answer
 
-	for(int row : dl.Col(minCol))  {
-		dl.solveConflict(row);
-		QPair<int, QPair<int, int> > tmp = dl.getVal(row, minCol);
+	for(int row : dl->Col(minCol))  {
+		dl->solveConflict(row);
+		QPair<int, QPair<int, int> > tmp = dl->getVal(row, minCol);
 		mat[tmp.second.first][tmp.second.second] = tmp.first;
 		recSolve(dl, mat, ans);
-		dl.backTrack(); // match with dl.solveConflict
+		dl->backTrack(); // match with dl.solveConflict
 	}
 }

@@ -26,7 +26,7 @@ private:
 	void removeCol(int col, QStack<ListNode*>* s = nullptr); // finished
 
 private:
-	DLNodesContainer* nodes;
+	StdSudokuNodesContainer* nodes;
 	QStack< QStack<ListNode*>* >* m_rowStack;
 	QStack< QStack<ListNode*>* >* m_colStack;
 };

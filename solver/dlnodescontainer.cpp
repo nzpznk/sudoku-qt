@@ -1,6 +1,12 @@
 ﻿#include "dlnodescontainer.h"
+#include <QDebug>
 
 DLNodesContainer::DLNodesContainer()
+{
+
+}
+
+DLNodesContainer::~DLNodesContainer()
 {
 
 }
@@ -32,6 +38,7 @@ void DLNodesContainer::removeCol(int col, QStack<ListNode*>* s)
 	tmp->left->right = tmp->right;
 	tmp->right->left = tmp->left;
 	tmp->removed = true;
+	s->push(tmp);
 	qDebug() << "removed column" << tmp->colNum;
 }
 
@@ -42,7 +49,7 @@ void DLNodesContainer::restoreRow(QStack<ListNode*>* lastRows)
 		tmp = lastRows->top();
 		getCol(tmp->colNum)->size++;
 		tmp->up->down = tmp;
-		tmp->down->up->tmp;
+		tmp->down->up = tmp;
 		tmp->removed = false;
 	}
 }
@@ -57,3 +64,7 @@ void DLNodesContainer::restoreCol(QStack<ListNode*>* lastCols)
 		tmp->removed = false;
 	}
 }
+
+ListNode*DLNodesContainer::colHeader() { return m_colHeader; }
+
+ListNode*DLNodesContainer::colTailer() { return m_colTailer; }

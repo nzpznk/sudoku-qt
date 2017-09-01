@@ -1,10 +1,10 @@
 ﻿#include "stdsudokunodescontainer.h"
 
-StdSudokuNodesContainer::StdSudokuNodesContainer(const QVector< QVector<int> >& mat)
+StdSudokuNodesContainer::StdSudokuNodesContainer(const QVector< QVector<int> >&)
 {
 	colSize = 4 * SIZE * SIZE;
 	rowSize = SIZE * SIZE * SIZE;
-	m_nodes = new ListNode[rowSize];
+	m_nodes = new ListNode*[rowSize];
 	m_colNodes = new ListNode[colSize];
 	for(int i = 0; i < colSize - 1; ++i) {
 		m_colNodes[i].down = m_colNodes[i].up = &m_colNodes[i];
@@ -76,6 +76,11 @@ StdSudokuNodesContainer::~StdSudokuNodesContainer()
 	m_colNodes = nullptr;
 }
 
+int StdSudokuNodesContainer::getRowNum(int val, int mRow, int mCol)
+{
+	return val * gridNum + mRow * SIZE + mCol;
+}
+
 QPair<int, QPair<int, int> > StdSudokuNodesContainer::getNumber(int row, int col)
 {
 	int val = row / gridNum + 1;
@@ -88,11 +93,11 @@ ListNode*StdSudokuNodesContainer::getCol(int col)
 	return &m_colNodes[col];
 }
 
-QVector<ListNode*> StdSudokuNodesContainer::getRow(int row)
+QVector<ListNode*> StdSudokuNodesContainer::getRow(int row, int)
 {
 	QVector<ListNode*> ans;
 	for(int i = 0; i < 4; ++i) {
-		ans.push(&m_nodes[row][i]);
+		ans.push_back(&m_nodes[row][i]);
 	}
 	return ans;
 }

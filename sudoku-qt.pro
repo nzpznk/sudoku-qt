@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         UI/mainwindow.cpp \
-    UI/gameboard.cpp \
     solver/solver.cpp \
     logic/logiccontroller.cpp \
     solver/dancinglinks.cpp \
@@ -37,10 +36,13 @@ SOURCES += main.cpp\
     solver/dancinglinks.cpp \
     solver/solver.cpp \
     solver/stdsudokunodescontainer.cpp \
-    solver/dlnodescontainer.cpp
+    solver/dlnodescontainer.cpp \
+    UI/backupgameboard.cpp \
+#    UI/gameboard.cpp \
+    UI/sudokugrid.cpp \
+    UI/gridbtn.cpp
 
 HEADERS  += UI/mainwindow.h \
-    UI/gameboard.h \
     solver/solver.h \
     logic/logiccontroller.h \
     solver/dancinglinks.h \
@@ -52,10 +54,18 @@ HEADERS  += UI/mainwindow.h \
     solver/solver.h \
     solver/listnode.h \
     solver/dlnodescontainer.h \
-    solver/stdsudokunodescontainer.h
+    solver/stdsudokunodescontainer.h \
+    UI/backupgameboard.h \
+#    UI/gameboard.h \
+    UI/sudokugrid.h \
+    UI/gridbtn.h
 
 INCLUDEPATH += ./test/
     ./loader/
     ./logic/
     ./solver/
     ./UI/
+
+FORMS += \
+#    UI/gameboard.ui \
+    UI/sudokugrid.ui

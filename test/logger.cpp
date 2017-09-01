@@ -19,3 +19,7 @@ void Logger::logmat(QVector< QVector<int>* >* mat)
 	}
 }
 
+void Logger::log(int integer)
+{
+	qDebug() << integer;
+}
