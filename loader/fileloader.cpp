@@ -11,10 +11,11 @@ FileLoader::FileLoader(QString path, QObject* parent): \
 
 }
 
-void FileLoader::load()
+QVector< QVector<int> > FileLoader::load()
 {
+	qDebug() << "slot load called";
 	int width, height;
-	QVector< QVector<int>* >* mat = new QVector< QVector<int>* >;
+	QVector< QVector<int> > mat;
 	QFile file(m_path);
 	if(!file.open(QIODevice::ReadOnly)) {
 		qDebug() << QString("file") << m_path << QString("load failed");
@@ -24,18 +25,15 @@ void FileLoader::load()
 	if(width != 9 || height != 9) {
 		qDebug() << "width or height not equal 9";
 	}
-	qDebug() << width << height;
-	QVector<int>* rowVec = nullptr;
+	// qDebug() << width << height;
 	int tmp = 0;
 	for(int i = 0; i < width; ++i) {
-		rowVec = new QVector<int>();
+		mat.push_back(QVector<int>());
 		for(int j = 0; j < height; ++j) {
 			ts >> tmp;
-			rowVec->push_back(tmp);
+			mat[i].push_back(tmp);
 		}
-		mat->push_back(rowVec);
-		rowVec = nullptr;
 	}
-	emit loadResult(mat);
+	return mat;
 }
 

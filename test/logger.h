@@ -11,7 +11,7 @@ public:
 	explicit Logger(QObject *parent = 0);
 
 public slots:
-	void logmat(QVector< QVector<int>* >* mat);
+	void logmat(const QVector< QVector<int> >& mat);
 	void log(int integer);
 
 };

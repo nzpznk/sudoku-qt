@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = sudoku-qt
 TEMPLATE = app
 
+CONFIG += qtestlib
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -23,49 +25,52 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += main.cpp\
-        UI/mainwindow.cpp \
-    solver/solver.cpp \
-    logic/logiccontroller.cpp \
-    solver/dancinglinks.cpp \
+SOURCES += \
+#    main.cpp\
+#    logic/logiccontroller.cpp \
     loader/loader.cpp \
     loader/fileloader.cpp \
-    test/test.cpp \
-    test/logger.cpp \
-    logic/logiccontroller.cpp \
+#    logic/logiccontroller.cpp \
     solver/dancinglinks.cpp \
     solver/solver.cpp \
     solver/stdsudokunodescontainer.cpp \
     solver/dlnodescontainer.cpp \
-    UI/backupgameboard.cpp \
+#    UI/mainwindow.cpp \
+#    UI/backupgameboard.cpp \
 #    UI/gameboard.cpp \
-    UI/sudokugrid.cpp \
-    UI/gridbtn.cpp
+#    UI/sudokugrid.cpp \
+#    UI/gridbtn.cpp \
+#    UI/inputboard.cpp \
+    test/test.cpp \
+    test/logger.cpp
 
-HEADERS  += UI/mainwindow.h \
-    solver/solver.h \
-    logic/logiccontroller.h \
-    solver/dancinglinks.h \
+HEADERS  += \
+#    logic/logiccontroller.h \
     loader/loader.h \
     loader/fileloader.h \
-    test/logger.h \
-    logic/logiccontroller.h \
     solver/dancinglinks.h \
     solver/solver.h \
     solver/listnode.h \
     solver/dlnodescontainer.h \
     solver/stdsudokunodescontainer.h \
-    UI/backupgameboard.h \
+#    UI/mainwindow.h \
+#    UI/backupgameboard.h \
 #    UI/gameboard.h \
-    UI/sudokugrid.h \
-    UI/gridbtn.h
+#    UI/sudokugrid.h \
+#    UI/gridbtn.h \
+#    UI/inputboard.h \
+    test/logger.h \
+    test/testsolver.h
 
-INCLUDEPATH += ./test/
+INCLUDEPATH += \
+    ./test/
     ./loader/
     ./logic/
     ./solver/
     ./UI/
 
-FORMS += \
+#FORMS += \
 #    UI/gameboard.ui \
-    UI/sudokugrid.ui
+#    UI/sudokugrid.ui \
+#    UI/inputboard.ui \
+#    UI/mainwindow.ui

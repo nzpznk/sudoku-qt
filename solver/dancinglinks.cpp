@@ -5,6 +5,8 @@
 DancingLinks::DancingLinks(const QVector< QVector<int> >& mat)
 {
 	nodes = new StdSudokuNodesContainer(mat);
+	// nodes->checkNewDL();
+
 	m_rowStack = new QStack< QStack<ListNode*>* >;
 	m_colStack = new QStack< QStack<ListNode*>* >;
 
@@ -13,6 +15,8 @@ DancingLinks::DancingLinks(const QVector< QVector<int> >& mat)
 			if(mat[i][j]) solveConflict(nodes->getRowNum(mat[i][j], i, j), false);
 		}
 	}
+
+	// nodes->checkNewDL();
 }
 
 DancingLinks::~DancingLinks()
@@ -47,20 +51,24 @@ int DancingLinks::chooseCol()
 	int minSize = 100000000;
 	ListNode* tailer = nodes->colTailer();
 	ListNode* cur = nodes->colHeader();
+	ListNode* minNode = nullptr;
 	while(cur->right != tailer) {
 		cur = cur->right;
 		if(cur->size < minSize) {
+			minNode = cur;
 			minSize = cur->size;
 			col = cur->colNum;
 		}
 	}
 	if(minSize > 0) return col;
-	else return -1;
+	else {
+		// qDebug() << "col" << col << "have only" << minSize << "rows";
+		return -1;
+	}
 }
 
 QVector<int> DancingLinks::Col(int rank)
 {
-	qDebug() << "Col(" << rank << ") called";
 	ListNode* col = nodes->getCol(rank);
 	ListNode* cur = col;
 	QVector<int> ans;
@@ -68,13 +76,11 @@ QVector<int> DancingLinks::Col(int rank)
 		cur = cur->down;
 		ans.push_back(cur->rowNum);
 	}
-	qDebug() << "Col(" << rank << ") finished";
 	return ans;
 }
 
 QVector<int> DancingLinks::Row(int rank)
 {
-	qDebug() << "Row(" << rank << ") called";
 	QVector<ListNode*> rowNodeVec = nodes->getRow(rank);
 	QVector<int> ans;
 	for(ListNode* tmp : rowNodeVec) {
@@ -110,7 +116,6 @@ void DancingLinks::backTrack()
 {
 	QStack< ListNode* >* lastRows = m_rowStack->top();
 	QStack< ListNode* >* lastCols = m_colStack->top();
-	ListNode* tmp = nullptr;
 	m_rowStack->pop();
 	m_colStack->pop();
 	nodes->restoreRow(lastRows);

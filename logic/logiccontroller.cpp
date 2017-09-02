@@ -6,6 +6,16 @@ LogicController::LogicController(QObject *parent) : \
 
 }
 
+void LogicController::startGame(QString level)
+{
+	if(level == "random") {
+		// use random generator
+		return;
+	} else {
+                m_mat = FileLoader("./////////////////////")
+	}
+}
+
 void LogicController::changeNum(int val, int row, int col)
 {
 //	mat[row][col] = val;

@@ -8,12 +8,12 @@ Logger::Logger(QObject* parent)
 {
 }
 
-void Logger::logmat(QVector< QVector<int>* >* mat)
+void Logger::logmat(const QVector< QVector<int> >& mat)
 {
 	qDebug() << "slot logmat called";
-	for(int i = 0; i < mat->size(); ++i) {
-		for(int j = 0; j < mat->operator[](i)->size(); ++j) {
-			std::cout << (*(*mat)[i])[j] << " ";
+	for(int i = 0; i < mat.size(); ++i) {
+		for(int j = 0; j < mat[i].size(); ++j) {
+			std::cout << mat[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}

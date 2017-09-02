@@ -1,7 +1,7 @@
 ﻿#include "UI/mainwindow.h"
 #include <QApplication>
 
-#define DEBUG
+// #define DEBUG
 
 #ifndef DEBUG
 int main(int argc, char *argv[])

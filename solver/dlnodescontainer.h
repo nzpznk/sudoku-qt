@@ -5,6 +5,7 @@
 #include <QPair>
 #include <QStack>
 #include "listnode.h"
+#include <QDebug>
 
 class DLNodesContainer
 {
@@ -23,6 +24,24 @@ public:
 	virtual void restoreCol(QStack<ListNode*>* LastCols);
 	virtual ListNode* colHeader();
 	virtual ListNode* colTailer();
+
+public:
+	void checkNewDL() {
+		ListNode* cur = colHeader();
+		int cnt1 = 0;
+		while(cur->right != colTailer()) {
+			++cnt1;
+			if(cnt1 > 323) qDebug() << "infinite loop";
+			cur = cur->right;
+			ListNode* rcur = cur;
+			int cnt2 = 0;
+			while(rcur->down != cur) {
+				cnt2++;
+				rcur = rcur->down;
+			}
+			// if(cnt2 != 9) qDebug() << "column" << cur->colNum << "colsize" << cur->size;
+		}
+	}
 
 protected:
 	ListNode* m_colHeader;

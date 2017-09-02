@@ -8,6 +8,8 @@
 #include "dlnodescontainer.h"
 #include "stdsudokunodescontainer.h"
 
+#include <iostream>
+
 class DancingLinks
 {
 public:
@@ -24,6 +26,26 @@ public:
 private:
 	void removeRow(int row, QStack<ListNode*>* s = nullptr); // finished
 	void removeCol(int col, QStack<ListNode*>* s = nullptr); // finished
+public:
+	void showStatus() {
+		ListNode* cur = nodes->colHeader();
+		while(cur->right != nodes->colTailer()) {
+			cur = cur->right;
+			int k = cur->colNum;
+			if(k / 81 == 0) {
+				qDebug() << "col number: " << k / 9 << ": ";
+			} else if(k / 81 == 1) {
+				qDebug() << "row number: " << (k-81) / 9 << ": ";
+			} else if(k / 81 == 2) {
+				qDebug() << "grid number: " << (k-162) / 9 << ": ";
+			} else {
+				qDebug() << "posi: (" << (k-243) / 9 << ", " << (k-243) % 9 << ") : ";
+			}
+			for(int row : Col(k)) {
+				qDebug() << row / 81 + 1 << ":" << "(" << (row % 81) / 9 << ", " << (row % 81) % 9 << ")";
+			}
+		}
+	}
 
 private:
 	StdSudokuNodesContainer* nodes;

@@ -5,11 +5,10 @@
 
 class FileLoader : public Loader
 {
+	Q_OBJECT
 public:
 	FileLoader(QString path, QObject* parent = 0);
-
-public slots:
-	virtual void load();
+	QVector< QVector<int> > load();
 
 private:
 	QString m_path;

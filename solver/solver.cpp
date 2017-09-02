@@ -48,6 +48,7 @@ int Solver::cntGivenNumber(const QVector<QVector<int> >& mat)
  */
 void Solver::recSolve(DancingLinks* dl, QVector< QVector<int> >& mat, QVector < QVector< QVector<int> > >& ans)
 {
+	//dl->showStatus();
 	if(ans.size() > 1) return;
 	if(dl->empty()) {
 		ans.push_back(mat);

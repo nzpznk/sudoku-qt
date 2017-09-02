@@ -16,13 +16,16 @@ class SudokuGrid : public QWidget
 	Q_OBJECT
 
 public:
-	explicit SudokuGrid(QWidget *parent = 0);
+	// init with a mat
+	explicit SudokuGrid(QWidget *parent = 0, const QVector< QVector<int> >& mat);
 	~SudokuGrid();
 
 signals:
-
+	void btnChosen(int rank);
 
 public slots:
+	setNum(int val, int rank);
+	clearGrid(int rank);
 	void log(int rank);
 
 private:

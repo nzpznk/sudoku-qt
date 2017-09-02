@@ -7,10 +7,15 @@ StdSudokuNodesContainer::StdSudokuNodesContainer(const QVector< QVector<int> >&)
 	m_nodes = new ListNode*[rowSize];
 	m_colNodes = new ListNode[colSize];
 	for(int i = 0; i < colSize - 1; ++i) {
-		m_colNodes[i].down = m_colNodes[i].up = &m_colNodes[i];
+		m_colNodes[i].colNum = i;
+		m_colNodes[i].down = &m_colNodes[i];
+		m_colNodes[i].up = &m_colNodes[i];
 		m_colNodes[i].right = &m_colNodes[i + 1];
 		m_colNodes[i + 1].left = &m_colNodes[i];
 	}
+	m_colNodes[colSize - 1].colNum = colSize - 1;
+	m_colNodes[colSize - 1].down = &m_colNodes[colSize - 1];
+	m_colNodes[colSize - 1].up = &m_colNodes[colSize - 1];
 	gridNum = SIZE * SIZE;
 	for(int i = 0; i < rowSize; ++i) {
 		m_nodes[i] = new ListNode[4];
@@ -35,7 +40,7 @@ StdSudokuNodesContainer::StdSudokuNodesContainer(const QVector< QVector<int> >&)
 		m_nodes[i][1].up->down = &m_nodes[i][1];
 		m_nodes[i][1].colNum = gridNum + v + SIZE * mRow;
 
-		int nthBigGrid = (mRow % 3) * 3 + mCol % 3;
+		int nthBigGrid = (mRow / 3) * 3 + mCol / 3;
 		m_colNodes[gridNum * 2 + v + SIZE * nthBigGrid].size++;
 		m_nodes[i][2].up = m_colNodes[gridNum * 2 + v + SIZE * nthBigGrid].up;
 		m_nodes[i][2].down = &m_colNodes[gridNum * 2 + v + SIZE * nthBigGrid];
@@ -78,7 +83,7 @@ StdSudokuNodesContainer::~StdSudokuNodesContainer()
 
 int StdSudokuNodesContainer::getRowNum(int val, int mRow, int mCol)
 {
-	return val * gridNum + mRow * SIZE + mCol;
+	return (val-1) * gridNum + mRow * SIZE + mCol;
 }
 
 QPair<int, QPair<int, int> > StdSudokuNodesContainer::getNumber(int row, int col)

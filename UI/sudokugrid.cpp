@@ -1,7 +1,7 @@
 ﻿#include "sudokugrid.h"
 #include "ui_sudokugrid.h"
 
-SudokuGrid::SudokuGrid(QWidget *parent) :
+SudokuGrid::SudokuGrid(QWidget *parent, const QVector< QVector<int> >& mat) :
 	QWidget(parent),
 	ui(new Ui::SudokuGrid)
 {
@@ -18,7 +18,7 @@ SudokuGrid::SudokuGrid(QWidget *parent) :
 			midGrid->addWidget(btn, j / 3, j % 3);
 		}
 	}
-	connect(btn2int, SIGNAL(mapped(int)), this, SLOT(log(int)));
+	connect(btn2int, SIGNAL(mapped(int)), this, SIGNAL(btnChosen(int));
 }
 
 SudokuGrid::~SudokuGrid()
