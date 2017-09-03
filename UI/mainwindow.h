@@ -2,21 +2,27 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QString>
 
-#include "backupgameboard.h"
+namespace Ui {
+class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = 0);
+	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
 signals:
-	void setDifficulty(QString level);
-	void start();
+	void start(const QString& level);
+
+private slots:
+	void on_pushButton_3_clicked();
+
+private:
+	Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

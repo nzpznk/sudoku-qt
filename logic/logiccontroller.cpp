@@ -5,7 +5,6 @@
 LogicController::LogicController(QObject *parent) : \
 	QObject(parent)
 {
-
 }
 
 void LogicController::startGame(QString level)
@@ -14,7 +13,7 @@ void LogicController::startGame(QString level)
 		// use random generator
 		return;
 	} else {
-		m_mat = FileLoader("./mat" + level).load();
+		m_mat = FileLoader("./mat" + level + ".txt").load();
 		m_size = m_mat.size();
 		for(int i = 0; i < m_size; ++i) {
 			QVector< QVector<bool> > rowVec;
@@ -27,6 +26,13 @@ void LogicController::startGame(QString level)
 				rowVec.push_back(record);
 			}
 			m_user.push_back(rowVec);
+		}
+		for(int i = 0; i < m_size; ++i) {
+			QVector<bool> prev;
+			for(int j = 0; j < m_size; ++j) {
+				prev.push_back(false);
+			}
+			m_preMode.push_back(prev);
 		}
 		emit showProblem(m_mat);
 		Solver sol;
@@ -97,6 +103,7 @@ void LogicController::clearGrid(int rank)
 
 void LogicController::calHighlights(int rank)
 {
+	qDebug() << "LogicController::calHighlights called";
 	int row = rank / m_size;
 	int col = rank % m_size;
 	int cnt = 0;

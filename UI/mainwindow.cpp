@@ -1,15 +1,19 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) :
+	QMainWindow(parent),
+	ui(new Ui::MainWindow)
 {
-	BackUpGameBoard* board = new BackUpGameBoard(this);
-	board->setGeometry(0, 0, 500, 500); // 未设置位置会造成不能显示
-	this->setFixedSize(800, 800);
+	ui->setupUi(this);
 }
 
 MainWindow::~MainWindow()
 {
+	delete ui;
+}
 
+void MainWindow::on_pushButton_3_clicked()
+{
+	emit start("10");
 }

@@ -23,7 +23,9 @@ void GameBoard::showProblem(const QVector<QVector<int> >& mat)
 
 void GameBoard::highlightGrids(int rank, QVector<int> grids)
 {
+	qDebug() << "gameboard::highlightGrids called";
 	ui->sudokugrid->highlightGrids(rank, grids);
+	qDebug() << "gameboard::highlightGrids finished";
 }
 
 void GameBoard::showWrong(const QVector<int>& grids)

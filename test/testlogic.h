@@ -3,6 +3,7 @@
 
 #include "logic/logiccontroller.h"
 #include "UI/gameboard.h"
+#include "UI/mainwindow.h"
 #include <QObject>
 #include <QWidget>
 #include <QPushButton>
@@ -10,6 +11,7 @@
 void testLogic() {
 	LogicController* logic = new LogicController;
 	GameBoard* gameboard = new GameBoard;
+	MainWindow* window = new MainWindow;
 	QObject::connect(logic, SIGNAL(showProblem(QVector<QVector<int> >)), gameboard, SLOT(showProblem(QVector<QVector<int> >)));
 	QObject::connect(gameboard, SIGNAL(setNumMsg(int,int,bool,bool)), logic, SLOT(setNum(int,int,bool,bool)));
 	QObject::connect(gameboard, SIGNAL(check()), logic, SLOT(check()));
@@ -22,7 +24,10 @@ void testLogic() {
 	QObject::connect(logic, SIGNAL(clearGridMsg(int)), gameboard, SLOT(clearGrid(int)));
 	QObject::connect(logic, SIGNAL(highlightGrids(int,QVector<int>)), gameboard, SLOT(highlightGrids(int,QVector<int>)));
 	QObject::connect(logic, SIGNAL(showAnswer(QVector<QVector<int> >)), gameboard, SLOT(showAnswer(QVector<QVector<int> >)));
+
+	QObject::connect(window, SIGNAL(start(QString)), logic, SLOT(startGame(QString)));
 	gameboard->show();
+	window->show();
 }
 
 
