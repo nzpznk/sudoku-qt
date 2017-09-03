@@ -195,8 +195,8 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>50</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -206,7 +206,13 @@
         </size>
        </property>
        <property name="text">
-        <string>undo</string>
+        <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -220,8 +226,8 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>50</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -231,7 +237,13 @@
         </size>
        </property>
        <property name="text">
-        <string>redo</string>
+        <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>

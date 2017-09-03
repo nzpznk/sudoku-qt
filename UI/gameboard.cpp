@@ -9,6 +9,11 @@ GameBoard::GameBoard(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->startpausebtn->setIconSize(QSize(40, 40));
+	ui->undobtn->setIconSize(QSize(40, 40));
+	ui->redobtn->setIconSize(QSize(40, 40));
+	ui->undobtn->setIcon(QIcon(":/icon/resources/icons/undo.png"));
+	ui->redobtn->setIcon(QIcon(":/icon/resources/icons/redo.png"));
+
 	m_startIcon = QIcon(":/icon/resources/icons/start.png");
 	m_pauseIcon = QIcon(":/icon/resources/icons/pause.png");
 	ui->startpausebtn->setIcon(m_pauseIcon);
@@ -131,4 +136,14 @@ void GameBoard::initTimer()
 	time = QTime::fromString("00:00:00", "hh:mm:ss");
 	ui->timeLCD->display(time.toString("hh:mm:ss"));
 	if(!m_isStopped) timer->start(1000);
+}
+
+void GameBoard::on_undobtn_clicked()
+{
+	emit undoMsg();
+}
+
+void GameBoard::on_redobtn_clicked()
+{
+	emit redoMsg();
 }

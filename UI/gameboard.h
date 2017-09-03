@@ -27,6 +27,8 @@ signals:
 	void requestHighlight(int rank);
 	void getAnswer();
 	void restartMsg();
+	void undoMsg();
+	void redoMsg();
 
 public slots: // connect with logic
 	void showProblem(const QVector< QVector<int> >& mat);
@@ -36,12 +38,6 @@ public slots: // connect with logic
 	void setNum(int rank, int num, bool isAdd, bool editMode);
 	void clearGrid(int rank);
 
-public slots:
-////	void chooseGrid(int rank); // choose a grid
-//	void undo();
-//	void redo();
-
-
 private slots: // connect with GUI
 	void setBtnChosen(int rank); // show the btn chosen
 	void on_receive_operation(InputBoard::OPERATION op, int num);
@@ -49,6 +45,8 @@ private slots: // connect with GUI
 	void updateTime();
 	void on_startpausebtn_clicked();
 	void on_restart_clicked();
+	void on_undobtn_clicked();
+	void on_redobtn_clicked();
 
 private:
 	void initTimer();
@@ -60,7 +58,6 @@ private:
 	bool m_isStopped;
 	QIcon m_startIcon;
 	QIcon m_pauseIcon;
-//	QLinkedList< QPair<QString, int> > operHistory;
 	Ui::GameBoard *ui;
 };
 

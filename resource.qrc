@@ -11,4 +11,7 @@
         <file>resources/icons/start.png</file>
         <file>resources/icons/undo.png</file>
     </qresource>
+    <qresource prefix="/mat">
+        <file>resources/mat/mat10.txt</file>
+    </qresource>
 </RCC>

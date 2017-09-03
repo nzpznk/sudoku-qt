@@ -32,7 +32,6 @@ SOURCES += \
     solver/solver.cpp \
     solver/stdsudokunodescontainer.cpp \
     solver/dlnodescontainer.cpp \
-#    UI/backupgameboard.cpp \
     UI/gameboard.cpp \
     UI/sudokugrid.cpp \
     UI/gridbtn.cpp \
@@ -41,7 +40,8 @@ SOURCES += \
     test/logger.cpp \
     test/testsukodugrid.cpp \
     test/testinput.cpp \
-    UI/mainwindow.cpp
+    UI/mainwindow.cpp \
+    loader/randomgenerator.cpp
     test/testgridbtn.cpp
 
 HEADERS  += \
@@ -53,7 +53,6 @@ HEADERS  += \
     solver/listnode.h \
     solver/dlnodescontainer.h \
     solver/stdsudokunodescontainer.h \
-#    UI/backupgameboard.h \
     UI/gameboard.h \
     UI/sudokugrid.h \
     UI/gridbtn.h \
@@ -64,7 +63,8 @@ HEADERS  += \
     test/testinput.h \
     test/testgameboard.h \
     test/testlogic.h \
-    UI/mainwindow.h
+    UI/mainwindow.h \
+    loader/randomgenerator.h
     test/testgridbtn.h
 
 INCLUDEPATH += \
@@ -77,11 +77,12 @@ INCLUDEPATH += \
 FORMS += \
     UI/gameboard.ui \
     UI/sudokugrid.ui \
-    test/testsukodugrid.ui \
-#    test/testgridbtn.ui
     UI/inputboard.ui \
-    test/testinput.ui \
-    UI/mainwindow.ui
+    UI/mainwindow.ui \
+    test/testsukodugrid.ui \
+    test/testgridbtn.ui \
+    test/testinput.ui
+
 
 RESOURCES += \
     resource.qrc

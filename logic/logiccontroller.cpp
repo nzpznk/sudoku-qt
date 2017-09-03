@@ -43,6 +43,10 @@ void LogicController::startGame(QString level)
 
 void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)
 {
+	emptyRedoStack();
+	m_undoStack_chosen.push(rank);
+	m_undoStack_preMode.push(m_preMode);
+	m_undoStack_user.push(m_user[rank / m_size][rank % m_size]);
 	bool isRemove = !isAdd;
 	bool f = false;
 	if(m_mat[rank / m_size][rank % m_size]) return;
@@ -81,7 +85,10 @@ void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)
 		m_preMode[rank / m_size][rank % m_size] = false;
 	}
 	emit setNumMsg(rank, num, !f, editMode);
-	emit calHighlights(rank);
+	calHighlights(rank);
+	m_redoStack_chosen.push(rank);
+	m_redoStack_preMode.push(m_preMode);
+	m_redoStack_user.push(m_user[rank / m_size][rank % m_size]);
 }
 
 void LogicController::check()
@@ -103,6 +110,17 @@ void LogicController::check()
 void LogicController::clearGrid(int rank)
 {
 	qDebug() << "LogicController::clearGrid called";
+	bool haveElem = false;
+	for(int i = 0; i < m_size; ++i) {
+		if(m_user[rank / m_size][rank % m_size][i]) {
+			haveElem = true; break;
+		}
+	}
+	if(!haveElem) return;
+	emptyRedoStack();
+	m_undoStack_chosen.push(rank);
+	m_undoStack_preMode.push(m_preMode);
+	m_undoStack_user.push(m_user[rank / m_size][rank % m_size]);
 	int row = rank / m_size;
 	int col = rank % m_size;
 	if(m_mat[row][col]) return;
@@ -110,6 +128,9 @@ void LogicController::clearGrid(int rank)
 		m_user[row][col][i] = false;
 	}
 	emit clearGridMsg(rank);
+	m_redoStack_chosen.push(rank);
+	m_redoStack_preMode.push(m_preMode);
+	m_redoStack_user.push(m_user[rank / m_size][rank % m_size]);
 	qDebug() << "LogicController::clearGrid finished";
 }
 
@@ -144,6 +165,8 @@ void LogicController::calHighlights(int rank)
 
 void LogicController::calAnswer()
 {
+	emptyUndoStack();
+	emptyRedoStack();
 	for(int i = 0; i < m_size; ++i) {
 		for(int j = 0; j < m_size; ++j) {
 			for(int k = 0; k < m_size; ++k) {
@@ -157,9 +180,86 @@ void LogicController::calAnswer()
 
 void LogicController::restartGame()
 {
+	emptyUndoStack();
+	emptyRedoStack();
 	QVector< QVector<bool> > v;
 	m_preMode = v;
 	QVector< QVector< QVector<bool> > > u;
 	m_user = u;
 	startGame(m_game);
 }
+
+void LogicController::undo()
+{
+	if(m_undoStack_chosen.empty()) return;
+	int rank = m_undoStack_chosen.top();
+	m_redoStack_chosen.push(rank);
+	m_undoStack_chosen.pop();
+	m_preMode = m_undoStack_preMode.top();
+	m_redoStack_preMode.push(m_preMode);
+	m_undoStack_preMode.pop();
+
+	QVector<bool> state = m_undoStack_user.top();
+	m_redoStack_user.push(state);
+	m_undoStack_user.pop();
+
+	int row = rank / m_size;
+	int col = rank % m_size;
+	m_user[row][col] = state;
+	for(int k = 0; k < m_size; ++k) {
+		emit setNumMsg(rank, k + 1, state[k], m_preMode[row][col]);
+	}
+
+	calHighlights(rank);
+}
+
+void LogicController::redo()
+{
+	if(m_redoStack_chosen.empty()) return;
+	int rank = m_redoStack_chosen.top();
+	m_undoStack_chosen.push(rank);
+	m_redoStack_chosen.pop();
+	m_preMode = m_redoStack_preMode.top();
+	m_undoStack_preMode.push(m_preMode);
+	m_redoStack_preMode.pop();
+
+	QVector<bool> state = m_redoStack_user.top();
+	m_undoStack_user.push(state);
+	m_redoStack_user.pop();
+
+	int row = rank / m_size;
+	int col = rank % m_size;
+	m_user[row][col] = state;
+	for(int k = 0; k < m_size; ++k) {
+		emit setNumMsg(rank, k + 1, state[k], m_preMode[row][col]);
+	}
+
+	calHighlights(rank);
+}
+
+void LogicController::emptyUndoStack()
+{
+	while(!m_undoStack_chosen.empty()) {
+		m_undoStack_chosen.pop();
+	}
+	while(!m_undoStack_preMode.empty()) {
+		m_undoStack_preMode.pop();
+	}
+	while(!m_undoStack_user.empty()) {
+		m_undoStack_user.pop();
+	}
+}
+
+void LogicController::emptyRedoStack()
+{
+	while(!m_redoStack_chosen.empty()) {
+		m_redoStack_chosen.pop();
+	}
+	while(!m_redoStack_preMode.empty()) {
+		m_redoStack_preMode.pop();
+	}
+	while(!m_redoStack_user.empty()) {
+		m_redoStack_user.pop();
+	}
+}
+
