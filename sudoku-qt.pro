@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 #    main.cpp\
-#    logic/logiccontroller.cpp \
     loader/loader.cpp \
     loader/fileloader.cpp \
 #    logic/logiccontroller.cpp \
@@ -38,16 +37,17 @@ SOURCES += \
 #    UI/gameboard.cpp \
     UI/sudokugrid.cpp \
     UI/gridbtn.cpp \
-#    UI/inputboard.cpp \
+    UI/inputboard.cpp \
     test/test.cpp \
     test/logger.cpp \
-    test/testsukodugrid.cpp
+    test/testsukodugrid.cpp \
+    test/testinput.cpp
     test/testgridbtn.cpp
 
 HEADERS  += \
-#    logic/logiccontroller.h \
     loader/loader.h \
     loader/fileloader.h \
+#    logic/logiccontroller.h \
 #    solver/dancinglinks.h \
 #    solver/solver.h \
 #    solver/listnode.h \
@@ -58,10 +58,11 @@ HEADERS  += \
 #    UI/gameboard.h \
     UI/sudokugrid.h \
     UI/gridbtn.h \
-#    UI/inputboard.h \
+    UI/inputboard.h \
     test/logger.h \
     test/testsolver.h \
-    test/testsukodugrid.h
+    test/testsukodugrid.h \
+    test/testinput.h
     test/testgridbtn.h
 
 INCLUDEPATH += \
@@ -76,5 +77,9 @@ FORMS += \
     UI/sudokugrid.ui \
     test/testsukodugrid.ui \
 #    test/testgridbtn.ui
-#    UI/inputboard.ui \
+    UI/inputboard.ui \
 #    UI/mainwindow.ui
+    test/testinput.ui
+
+RESOURCES += \
+    resource.qrc

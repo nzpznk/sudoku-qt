@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>resources/icons/check.png</file>
+        <file>resources/icons/circle.png</file>
+        <file>resources/icons/cross.png</file>
+        <file>resources/icons/edit.png</file>
+        <file>resources/icons/eraser.png</file>
+        <file>resources/icons/pause.png</file>
+        <file>resources/icons/redo.png</file>
+        <file>resources/icons/restart.png</file>
+        <file>resources/icons/start.png</file>
+        <file>resources/icons/undo.png</file>
+    </qresource>
+</RCC>

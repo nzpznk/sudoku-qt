@@ -20,6 +20,7 @@ public:
 	void add(int num, bool editMode); // finish
 	void remove(int num, bool allRemove); // finish
 	void clearState(); // finish
+	void setSelfIcon(const QPixmap& myicon);
 
 signals:
 	void click();
@@ -32,6 +33,7 @@ private:
 private:
 	QPixmap m_chosenIcon;
 	QPixmap m_wrongIcon;
+	QPixmap m_selfIcon;
 	QString m_chosenColor;
 	QString m_normalColor;
 	QString m_sameNumColor;
@@ -41,6 +43,7 @@ private:
 	bool m_sameNumHighlight;
 	bool m_chosen;
 	bool m_correct;
+	bool m_haveSelfIcon;
 };
 
 #endif // GRIDBTN_H

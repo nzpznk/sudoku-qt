@@ -8,7 +8,7 @@
 //#define LOADER
 //#define SUDOKUGRID
 //#define SOLVER
-#define SUDOKUGRID
+#define INPUTBOARD
 
 #ifdef LOADER
 #include "loader/fileloader.h"
@@ -50,13 +50,23 @@ void testSukoduGrid() {
 
 #endif
 
+#ifdef INPUTBOARD
+#include "testinput.h"
+void testInputBoard() {
+	TestInput* obj = new TestInput;
+	obj->show();
+}
+
+#endif
+
 int main(int argc, char** argv)
 {
 	QApplication app(argc, argv);
 //	testFileLoader(); // test pass;
 //	testSudokuGrid(); // test pass;
 //	testSolver();
-	testSukoduGrid();
+//	testSukoduGrid();
 //	testGridBtn();
+	testInputBoard();
 	return app.exec();
 }

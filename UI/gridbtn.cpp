@@ -4,7 +4,7 @@
 #include <QPushButton>
 
 GridBtn::GridBtn(QWidget* parent) : \
-	QLabel(parent), m_chosen(false), m_correct(true), m_editMode(false), m_highlight(false), m_sameNumHighlight(false)
+	QLabel(parent), m_chosen(false), m_correct(true), m_editMode(false), m_highlight(false), m_sameNumHighlight(false), m_haveSelfIcon(false)
 {
 	for(int i = 0; i < 9; ++i) {
 		m_arr[i] = false;
@@ -38,19 +38,22 @@ void GridBtn::paintEvent(QPaintEvent*)
 	if(!m_correct) {
 		p.drawPixmap(0, 0, size().width(), size().height(), m_wrongIcon);
 	}
+	if(m_haveSelfIcon) {
+		p.drawPixmap(0, 0, size().width(), size().height(), m_selfIcon);
+	}
 	QFont f("Helvetica");
 	if(m_editMode) {
 		f.setPixelSize(this->size().height() / 3);
 		p.setFont(f);
 		for(int i = 0; i < 9; ++i) {
-			if(m_arr[i]) p.drawText(getPosi(i), QString::number(i));
+			if(m_arr[i]) p.drawText(getPosi(i), QString::number(i + 1));
 		}
 	} else {
 		f.setPixelSize(this->size().height() * 3 / 4);
 		p.setFont(f);
 		for(int i = 0; i < 9; ++i) {
 			if(m_arr[i]) {
-				p.drawText(getPosi(i), QString::number(i));
+				p.drawText(getPosi(i), QString::number(i + 1));
 				break;
 			}
 		}
@@ -90,7 +93,7 @@ void GridBtn::add(int num, bool editMode)
 		}
 	}
 
-	m_arr[num] = true;
+	m_arr[num - 1] = true;
 	m_editMode = editMode;
 	update();
 }
@@ -102,7 +105,7 @@ void GridBtn::remove(int num, bool allRemove)
 			m_arr[i] = false;
 		}
 	} else {
-		m_arr[num] = false;
+		m_arr[num - 1] = false;
 	}
 	update();
 }
@@ -118,6 +121,12 @@ void GridBtn::clearState()
 	update();
 }
 
+void GridBtn::setSelfIcon(const QPixmap& myicon)
+{
+	m_haveSelfIcon = true;
+	m_selfIcon = myicon;
+}
+
 void GridBtn::mousePressEvent(QMouseEvent*)
 {
 	//setColor(m_chosenColor);
@@ -126,11 +135,10 @@ void GridBtn::mousePressEvent(QMouseEvent*)
 void GridBtn::mouseReleaseEvent(QMouseEvent* ev)
 {
 	if(ev->x() < 0 || ev->x() > size().width() || ev->y() < 0 || ev->y() > size().height()) {
-		this->setStyleSheet("background-color: #fff");
 		return;
 	}
-	m_chosen = !m_chosen;
-	update();
+//	m_chosen = !m_chosen;
+//	update();
 	emit click();
 }
 
