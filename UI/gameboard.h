@@ -16,7 +16,7 @@ class GameBoard : public QWidget
 	Q_OBJECT
 
 public:
-	explicit GameBoard(const QVector< QVector<int> >& mat, QWidget *parent = 0);
+	explicit GameBoard(QWidget *parent = 0);
 	~GameBoard();
 
 signals:
@@ -27,6 +27,7 @@ signals:
 	void getAnswer();
 
 public slots: // connect with logic
+	void showProblem(const QVector< QVector<int> >& mat);
 	void highlightGrids(int rank, QVector<int> grids);
 	void showWrong(const QVector<int>& girds); // show which grids are misfilled
 	void showAnswer(const QVector< QVector<int> >& ans); // show answer of the problem

@@ -9,7 +9,7 @@
 //#define SUDOKUGRID
 //#define SOLVER
 //#define INPUTBOARD
-#define GAMEBOARD
+#define LOGIC
 
 #ifdef LOADER
 #include "loader/fileloader.h"
@@ -64,6 +64,10 @@ void testInputBoard() {
 #include "test/testgameboard.h"
 #endif
 
+#ifdef LOGIC
+#include "test/testlogic.h"
+#endif
+
 int main(int argc, char** argv)
 {
 	QApplication app(argc, argv);
@@ -73,6 +77,7 @@ int main(int argc, char** argv)
 //	testSukoduGrid();
 //	testGridBtn();
 //	testInputBoard();
-	testGameBoard();
+//	testGameBoard();
+	testLogic();
 	return app.exec();
 }

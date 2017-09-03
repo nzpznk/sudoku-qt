@@ -1,12 +1,11 @@
 ﻿#include "gameboard.h"
 #include "ui_gameboard.h"
 
-GameBoard::GameBoard(const QVector< QVector<int> >& mat, QWidget *parent) :
+GameBoard::GameBoard(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::GameBoard)
 {
 	ui->setupUi(this);
-	ui->sudokugrid->showProblem(mat);
 	connect(ui->sudokugrid, SIGNAL(btnChosen(int)), this, SLOT(setBtnChosen(int)));
 	connect(ui->numberboard, SIGNAL(oper(InputBoard::OPERATION, int)), \
 			this, SLOT(on_receive_operation(InputBoard::OPERATION, int)));
@@ -15,6 +14,11 @@ GameBoard::GameBoard(const QVector< QVector<int> >& mat, QWidget *parent) :
 GameBoard::~GameBoard()
 {
 	delete ui;
+}
+
+void GameBoard::showProblem(const QVector<QVector<int> >& mat)
+{
+	ui->sudokugrid->showProblem(mat);
 }
 
 void GameBoard::highlightGrids(int rank, QVector<int> grids)

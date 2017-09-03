@@ -15,6 +15,7 @@ public:
 	virtual QVector<ListNode*> getRow(int row, int col = 0) = 0;
 	virtual ListNode* getCol(int col) = 0;
 	virtual QPair< int, QPair<int, int> > getNumber(int row, int col) = 0;
+	virtual int getRowNum(int val, int mRow, int mCol) = 0;
 
 public:
 	// have default implement
