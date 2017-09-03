@@ -26,6 +26,8 @@ public:
 private:
 	void removeRow(int row, QStack<ListNode*>* s = nullptr); // finished
 	void removeCol(int col, QStack<ListNode*>* s = nullptr); // finished
+
+/* for debug
 public:
 	void showStatus() {
 		ListNode* cur = nodes->colHeader();
@@ -46,9 +48,10 @@ public:
 			}
 		}
 	}
+*/
 
 private:
-	StdSudokuNodesContainer* nodes;
+	DLNodesContainer* nodes;
 	QStack< QStack<ListNode*>* >* m_rowStack;
 	QStack< QStack<ListNode*>* >* m_colStack;
 };

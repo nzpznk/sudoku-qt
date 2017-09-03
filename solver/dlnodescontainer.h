@@ -25,7 +25,9 @@ public:
 	virtual ListNode* colHeader();
 	virtual ListNode* colTailer();
 
+/* for debug
 public:
+
 	void checkNewDL() {
 		ListNode* cur = colHeader();
 		int cnt1 = 0;
@@ -42,6 +44,7 @@ public:
 			// if(cnt2 != 9) qDebug() << "column" << cur->colNum << "colsize" << cur->size;
 		}
 	}
+*/
 
 protected:
 	ListNode* m_colHeader;

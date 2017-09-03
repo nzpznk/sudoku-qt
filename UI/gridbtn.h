@@ -3,6 +3,8 @@
 
 #include <QLabel>
 #include <QPainter>
+#include <QPixmap>
+#include <QColor>
 #include <QMouseEvent>
 
 class GridBtn : public QLabel
@@ -10,22 +12,33 @@ class GridBtn : public QLabel
 	Q_OBJECT
 public:
 	GridBtn(QWidget* parent = 0);
-	//void setStyle();
+	void paintEvent(QPaintEvent*);
+	void highlight(bool isHighlight); // finish
+	void setChosen(bool isChosen); // highlight + special icon
+	void setCorrect(bool isCorrect); // finish
+	void add(int num, bool editMode); // finish
+	void remove(int num, bool allRemove); // finish
+	void clearState(); // finish
 
 signals:
 	void click();
 
-public slots:
-	void paintEvent(QPaintEvent*);
-	void add(int);
-	void remove(int);
-
 private:
 	void mousePressEvent(QMouseEvent*);
 	void mouseReleaseEvent(QMouseEvent* ev);
-	QRect getPosi(int r);
+	QRect getPosi(int r); // finish
+
+private:
+	QPixmap m_chosenIcon;
+	QPixmap m_wrongIcon;
+	QString m_chosenColor;
+	QString m_normalColor;
+	QString m_sameNumColor;
 	bool m_arr[9];
-	bool choosen;
+	bool m_editMode;
+	bool m_highlight;
+	bool m_chosen;
+	bool m_correct;
 };
 
 #endif // GRIDBTN_H

@@ -14,23 +14,30 @@ public:
 	explicit LogicController(QObject *parent = 0);
 
 signals:
+	void showProblem(const QVector< QVector<int> >& mat);
+	void highlightGrids(int rank, const QVector<int>& grids);
+	void setNum(int rank, bool isRemove, int num, bool editMode);
 	void wrongPosi(const QVector<int>& rank); // emited when check is over
-	void conflict(int rank1, int rank2);
 	void congratulation();
+//	void conflict(int rank1, int rank2);
 
 public slots:
 	void startGame(QString level); // init the gameboard in logic controller
-	void setNum(int val, int rank); // store the user's operation including add and remove
+	void setBtnActivated(int rank);
+	void changeNum(bool editMode, int num); // if input widget is ok, emit the setNum signal
 	void check(); // check if is correct
-	void changeNum(int val, int row, int col);
+	// void setNum(int val, int rank); // store the user's operation including add and remove
+	// void changeNum(int val, int row, int col);
+
+//private:
+	//int testCollide(int row, int col);
 
 private:
-	int testCollide(int row, int col);
-
-private:
+	int m_activated;
 	QVector< QVector<int> > m_user;
 	QVector< QVector<int> > m_mat;
 	int m_emptyPlace;
 };
 
 #endif // LOGICCONTROLLER_H
+

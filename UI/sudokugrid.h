@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSignalMapper>
 #include <QGridLayout>
+#include <QVector>
 #include <qDebug>
 #include "gridbtn.h"
 
@@ -16,19 +17,21 @@ class SudokuGrid : public QWidget
 	Q_OBJECT
 
 public:
-	// init with a mat
-	explicit SudokuGrid(QWidget *parent = 0, const QVector< QVector<int> >& mat);
+	explicit SudokuGrid(QWidget *parent = 0);
 	~SudokuGrid();
 
 signals:
 	void btnChosen(int rank);
 
 public slots:
-	setNum(int val, int rank);
-	clearGrid(int rank);
-	void log(int rank);
+	void showProblem(const QVector< QVector<int> >& mat);
+	void setNum(int rank, int val, bool isAdd, bool editMode);
+	void showWrongMsg(int rank);
+	void highlightGrids(int rank, const QVector<int>& grids); // finish
+	void clearState(const QVector<int>& grids); // finish
 
 private:
+	QVector< QVector<GridBtn*> > m_btns;
 	Ui::SudokuGrid *ui;
 };
 

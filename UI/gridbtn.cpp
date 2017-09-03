@@ -3,47 +3,112 @@
 #include <QDebug>
 #include <QPushButton>
 
-GridBtn::GridBtn(QWidget* parent) : QLabel(parent)
+GridBtn::GridBtn(QWidget* parent) : \
+	QLabel(parent), m_chosen(false), m_correct(true), m_editMode(false), m_highlight(false)
 {
 	for(int i = 0; i < 9; ++i) {
 		m_arr[i] = false;
 	}
-	this->choosen = false;
 	this->setFrameShape (QFrame::Box);
 	this->setStyleSheet("border: 1px solid  #ff0000");
-//	this->setMinimumSize(300, 300);
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	add(0); add(5); add(7);
+	m_chosenColor = "background-color: #7bbfea";
+	m_normalColor = "background-color: #fff";
+	m_sameNumColor = "background-color: #ffff00";
+	m_chosenIcon = QPixmap("E:\\CS_Repository\\Project\\build-sudoku-qt-Desktop_Qt_5_8_0_MSVC2015_64bit-Debug\\resources\\icons\\circle.png");
+	m_wrongIcon = QPixmap("E:\\CS_Repository\\Project\\build-sudoku-qt-Desktop_Qt_5_8_0_MSVC2015_64bit-Debug\\resources\\icons\\cross.png");
 }
 
 void GridBtn::paintEvent(QPaintEvent*)
 {
-	this->setFrameShape(QFrame::Box);
 	QPainter p(this);
+//	this->setFrameShape(QFrame::Box);
+	if(m_highlight) {
+		setStyleSheet(m_chosenColor);
+	} else {
+		setStyleSheet(m_normalColor);
+	}
+	if(m_chosen) {
+		p.drawPixmap(0, 0, size().width(), size().height(), m_chosenIcon);
+	}
+	if(!m_correct) {
+		p.drawPixmap(0, 0, size().width(), size().height(), m_wrongIcon);
+	}
 	QFont f("Helvetica");
-	f.setPixelSize(this->size().height() / 3);
-	p.setFont(f);
-	p.setBrush(Qt::yellow);
-	for(int i = 0; i < 9; ++i) {
-		if(m_arr[i]) p.drawText(getPosi(i), QString::number(i + 1));
+	if(m_editMode) {
+		f.setPixelSize(this->size().height() / 3);
+		p.setFont(f);
+		for(int i = 0; i < 9; ++i) {
+			if(m_arr[i]) p.drawText(getPosi(i), QString::number(i));
+		}
+	} else {
+		f.setPixelSize(this->size().height() * 3 / 4);
+		p.setFont(f);
+		for(int i = 0; i < 9; ++i) {
+			if(m_arr[i]) {
+				p.drawText(getPosi(i), QString::number(i));
+				break;
+			}
+		}
 	}
 }
 
-void GridBtn::add(int num)
+void GridBtn::highlight(bool isHighlight)
 {
-	m_arr[num] = true;
+	m_highlight = isHighlight;
 	update();
 }
 
-void GridBtn::remove(int num)
+void GridBtn::setChosen(bool isChosen)
 {
-	m_arr[num] = false;
+	m_chosen = isChosen;
+	update();
+}
+
+void GridBtn::setCorrect(bool iscorrect)
+{
+	m_correct = iscorrect;
+	update();
+}
+
+void GridBtn::add(int num, bool editMode)
+{
+	if(!editMode) {
+		for(int i = 0; i < 9; ++i) {
+			m_arr[i] = false;
+		}
+	}
+
+	m_arr[num] = true;
+	m_editMode = editMode;
+	update();
+}
+
+void GridBtn::remove(int num, bool allRemove)
+{
+	if(allRemove) {
+		for(int i = 0; i < 9; ++i) {
+			m_arr[i] = false;
+		}
+	} else {
+		m_arr[num] = false;
+	}
+	update();
+}
+
+
+void GridBtn::clearState()
+{
+	m_editMode = false;
+	m_chosen = false;
+	m_correct = true;
+	m_highlight = false;
 	update();
 }
 
 void GridBtn::mousePressEvent(QMouseEvent*)
 {
-	this->setStyleSheet("background-color: #ff0000");
+	//setColor(m_chosenColor);
 }
 
 void GridBtn::mouseReleaseEvent(QMouseEvent* ev)
@@ -52,17 +117,23 @@ void GridBtn::mouseReleaseEvent(QMouseEvent* ev)
 		this->setStyleSheet("background-color: #fff");
 		return;
 	}
-
-
-//	setClicked(!choosen); ////////////////////////////////////////////
+	m_chosen = !m_chosen;
+	update();
 	emit click();
 }
 
 QRect GridBtn::getPosi(int r)
 {
-	int w = this->size().width() / 3;
-	int h = this->size().height() / 3;
-	int row = r / 3;
-	int col = r % 3;
-	return QRect(col * w + w / 4, row * h, w, h);
+	int w = 0, h = 0, row = 0, col = 0;
+	if(m_editMode) {
+		w = this->size().width() / 3;
+		h = this->size().height() / 3;
+		row = r / 3;
+		col = r % 3;
+		return QRect(col * w + w / 4, row * h, w, h);
+	} else {
+		w = this->size().width();
+		h = this->size().height();
+		return QRect(w / 3, h / 8, w, h);
+	}
 }

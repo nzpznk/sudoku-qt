@@ -12,17 +12,39 @@ void LogicController::startGame(QString level)
 		// use random generator
 		return;
 	} else {
-                m_mat = FileLoader("./////////////////////")
+		m_mat = FileLoader("./mat" + level).load();
+		emit showProblem(m_mat);
 	}
+}
+
+void LogicController::setBtnActivated(int rank)
+{
+	m_activated = rank;
+	QVector<int> btnRanks;
+	int row = rank / 9;
+	int col = rank % 9;
+	for(int i = 0; i < GAMESIZE; ++i) {
+		btnRanks.push_back(row * 9 + i);
+		btnRanks.push_back(GAMESIZE * i + col);
+	}
+
+	for(int i = 0; i < GAMESIZE; ++i) {
+		for(int j = 0; j < GAMESIZE; ++j) {
+			if(m_user[i][j] == m_user[rank / GAMESIZE][rank % GAMESIZE]) {
+				btnRanks.push_back(GAMESIZE * i + j);
+			}
+		}
+	}
+	emit highlightGrids(rank, btnRanks);
 }
 
 void LogicController::changeNum(int val, int row, int col)
 {
-//	mat[row][col] = val;
-//	int collide = testCollide(row, col);
-//	if(collide != -1) {
-//		emit conflict(row * GAMESIZE + col, collide);
-//	}
+	mat[row][col] = val;
+	int collide = testCollide(row, col);
+	if(collide != -1) {
+		emit conflict(row * GAMESIZE + col, collide);
+	}
 }
 
 int LogicController::testCollide(int row, int col)
