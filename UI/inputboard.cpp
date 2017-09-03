@@ -3,7 +3,8 @@
 
 InputBoard::InputBoard(QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::InputBoard)
+	ui(new Ui::InputBoard),
+	mode(INPUTADD)
 {
 	ui->setupUi(this);
 	QSignalMapper* btn2num = new QSignalMapper(this);
@@ -35,8 +36,6 @@ void InputBoard::setModeEdit()
 	if(mode != EDITADD) {
 		mode = EDITADD;
 		m_edit->highlight(true);
-		m_erase->highlight(false);
-		m_check->highlight(false);
 	} else {
 		mode = INPUTADD;
 		m_edit->highlight(false);
@@ -45,34 +44,16 @@ void InputBoard::setModeEdit()
 
 void InputBoard::setModeErase()
 {
-	if(mode != REMOVE) {
-		mode = REMOVE;
-		m_edit->highlight(false);
-		m_erase->highlight(true);
-		m_check->highlight(false);
-	} else {
-		mode = INPUTADD;
-		m_erase->highlight(false);
-	}
+	emit oper(REMOVE, 0);
 }
 
 void InputBoard::setModeCheck()
 {
-	if(mode != CHECK) {
-		mode = CHECK;
-		m_edit->highlight(false);
-		m_erase->highlight(false);
-		m_check->highlight(true);
-		sendOperation(0);
-	} else {
-		mode = INPUTADD;
-		m_check->highlight(false);
-	}
+	emit oper(CHECK, 0);
 }
 
 void InputBoard::sendOperation(int num)
 {
-	if(mode == CHECK && num != 0) return;
-	qDebug() << mode << num;
+	//qDebug() << mode << num;
 	emit oper(mode, num);
 }

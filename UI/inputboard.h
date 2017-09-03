@@ -26,7 +26,7 @@ public:
 	~InputBoard();
 
 signals:
-	void oper(enum OPERATION, int num);
+	void oper(InputBoard::OPERATION, int num);
 
 private slots:
 	void setModeEdit();
@@ -39,7 +39,7 @@ private:
 	GridBtn* m_edit;
 	GridBtn* m_erase;
 	GridBtn* m_check;
-	OPERATION mode; // 0 : input; 1 : edit; 2 : erase; 3 : check
+	OPERATION mode; // 0 : input; 1 : edit;
 };
 
 #endif // INPUTBOARD_H

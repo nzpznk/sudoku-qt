@@ -19,16 +19,17 @@ class SudokuGrid : public QWidget
 public:
 	explicit SudokuGrid(QWidget *parent = 0);
 	~SudokuGrid();
+	void showProblem(const QVector< QVector<int> >& mat);
+	void setNum(int rank, int val, bool isAdd, bool editMode);
+	void showWrongMsg(QVector<int> grids);
+	void highlightGrids(int rank, const QVector<int>& sameNums); // finish
+	void clearGrid(int rank); // finish
+	void showAnswer(const QVector< QVector<int> >& ans);
 
 signals:
 	void btnChosen(int rank);
 
 public slots:
-	void showProblem(const QVector< QVector<int> >& mat);
-	void setNum(int rank, int val, bool isAdd, bool editMode);
-	void showWrongMsg(int rank);
-	void highlightGrids(int rank, const QVector<int>& sameNums); // finish
-	void clearGrid(int rank); // finish
 
 private:
 	QVector< QVector<GridBtn*> > m_btns;

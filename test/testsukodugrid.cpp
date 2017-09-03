@@ -54,7 +54,9 @@ void TestSukoduGrid::on_pushButton_2_clicked()
 
 void TestSukoduGrid::on_pushButton_3_clicked()
 {
-	ui->widget->showWrongMsg(5);
+	QVector<int> v;
+	v.push_back(5);
+	ui->widget->showWrongMsg(v);
 }
 
 void TestSukoduGrid::on_pushButton_4_clicked()

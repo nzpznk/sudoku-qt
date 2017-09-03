@@ -60,11 +60,12 @@ void SudokuGrid::setNum(int rank, int val, bool isAdd, bool editMode)
 	qDebug() << "SukoduGrid setNum slot finished";
 }
 
-void SudokuGrid::showWrongMsg(int rank)
+void SudokuGrid::showWrongMsg(QVector<int> grids)
 {
 	qDebug() << "SukoduGrid showWrongMsg slot called";
-	qDebug() << "\trank =" << rank;
-	m_btns[rank / 9][rank % 9]->setCorrect(false);
+	for(int rank : grids) {
+		m_btns[rank / 9][rank % 9]->setCorrect(false);
+	}
 	qDebug() << "SukoduGrid showWrongMsg slot finished";
 }
 
@@ -93,4 +94,15 @@ void SudokuGrid::clearGrid(int rank)
 	qDebug() << "SukoduGrid clearState slot called";
 	m_btns[rank / 9][rank % 9]->remove(0, true);
 	qDebug() << "SukoduGrid clearState slot finished";
+}
+
+void SudokuGrid::showAnswer(const QVector<QVector<int> >& ans)
+{
+	for(int i = 0; i < 9; ++i) {
+		for(int j = 0; j < 9; ++j) {
+			if(ans[i][j]) {
+				m_btns[i][j]->add(ans[i][j], false);
+			}
+		}
+	}
 }

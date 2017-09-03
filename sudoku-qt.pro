@@ -27,14 +27,14 @@ SOURCES += \
 #    main.cpp\
     loader/loader.cpp \
     loader/fileloader.cpp \
-#    logic/logiccontroller.cpp \
+    logic/logiccontroller.cpp \
 #    solver/dancinglinks.cpp \
 #    solver/solver.cpp \
 #    solver/stdsudokunodescontainer.cpp \
 #    solver/dlnodescontainer.cpp \
 #    UI/mainwindow.cpp \
 #    UI/backupgameboard.cpp \
-#    UI/gameboard.cpp \
+    UI/gameboard.cpp \
     UI/sudokugrid.cpp \
     UI/gridbtn.cpp \
     UI/inputboard.cpp \
@@ -47,7 +47,7 @@ SOURCES += \
 HEADERS  += \
     loader/loader.h \
     loader/fileloader.h \
-#    logic/logiccontroller.h \
+    logic/logiccontroller.h \
 #    solver/dancinglinks.h \
 #    solver/solver.h \
 #    solver/listnode.h \
@@ -55,14 +55,15 @@ HEADERS  += \
 #    solver/stdsudokunodescontainer.h \
 #    UI/mainwindow.h \
 #    UI/backupgameboard.h \
-#    UI/gameboard.h \
+    UI/gameboard.h \
     UI/sudokugrid.h \
     UI/gridbtn.h \
     UI/inputboard.h \
     test/logger.h \
     test/testsolver.h \
     test/testsukodugrid.h \
-    test/testinput.h
+    test/testinput.h \
+    test/testgameboard.h
     test/testgridbtn.h
 
 INCLUDEPATH += \
@@ -73,7 +74,7 @@ INCLUDEPATH += \
     ./UI/
 
 FORMS += \
-#    UI/gameboard.ui \
+    UI/gameboard.ui \
     UI/sudokugrid.ui \
     test/testsukodugrid.ui \
 #    test/testgridbtn.ui

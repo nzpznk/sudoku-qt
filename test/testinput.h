@@ -2,6 +2,7 @@
 #define TESTINPUT_H
 
 #include <QDialog>
+#include <QDebug>
 #include "UI/inputboard.h"
 
 namespace Ui {
@@ -15,6 +16,11 @@ class TestInput : public QDialog
 public:
 	explicit TestInput(QWidget *parent = 0);
 	~TestInput();
+
+public slots:
+	void on_receive_op(InputBoard::OPERATION op, int num) {
+		qDebug() << op << num;
+	}
 
 private:
 	Ui::TestInput *ui;
