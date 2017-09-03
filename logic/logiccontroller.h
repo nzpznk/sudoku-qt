@@ -31,6 +31,7 @@ public slots:
 	void clearGrid(int rank); // clear all number in the posi
 	void calHighlights(int rank); // calculate the grids that should be highlighted
 	void calAnswer();
+	void restartGame();
 
 //	void setBtnActivated(int rank);
 //	void changeNum(bool editMode, int num); // if input widget is ok, emit the setNum signal

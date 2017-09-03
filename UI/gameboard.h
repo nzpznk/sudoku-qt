@@ -26,6 +26,7 @@ signals:
 	void clearGridMsg(int rank);
 	void requestHighlight(int rank);
 	void getAnswer();
+	void restartMsg();
 
 public slots: // connect with logic
 	void showProblem(const QVector< QVector<int> >& mat);
@@ -46,8 +47,11 @@ private slots: // connect with GUI
 	void on_receive_operation(InputBoard::OPERATION op, int num);
 	void on_pushButton_clicked();
 	void updateTime();
-
 	void on_startpausebtn_clicked();
+	void on_restart_clicked();
+
+private:
+	void initTimer();
 
 private:
 	int m_btnChosen;

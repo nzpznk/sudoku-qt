@@ -8,9 +8,7 @@ GameBoard::GameBoard(QWidget *parent) :
 	m_isStopped(false)
 {
 	ui->setupUi(this);
-	time = QTime::fromString("00:00:00", "hh:mm:ss");
-	timer = new QTimer(this);
-	timer->start(1000);
+	initTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 	connect(ui->sudokugrid, SIGNAL(btnChosen(int)), this, SLOT(setBtnChosen(int)));
 	connect(ui->numberboard, SIGNAL(oper(InputBoard::OPERATION, int)), \
@@ -98,7 +96,7 @@ void GameBoard::updateTime()
 	// qDebug() << "GameBoard::updateTime() called";
 	ui->timeLCD->display(time.toString("hh:mm:ss"));
 	time = time.addSecs(1);
-	qDebug() << time.toString("hh:mm:ss");
+	// qDebug() << time.toString("hh:mm:ss");
 }
 
 void GameBoard::on_startpausebtn_clicked()
@@ -110,4 +108,17 @@ void GameBoard::on_startpausebtn_clicked()
 		timer->stop();
 		m_isStopped = true;
 	}
+}
+
+void GameBoard::on_restart_clicked()
+{
+	initTimer();
+	emit restartMsg();
+}
+
+void GameBoard::initTimer()
+{
+	time = QTime::fromString("00:00:00", "hh:mm:ss");
+	timer = new QTimer(this);
+	timer->start(1000);
 }

@@ -62,6 +62,7 @@ void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)
 			m_user[rank / m_size][rank % m_size][num - 1] = true;
 			f = false;
 		}
+		m_preMode[rank / m_size][rank % m_size] = true;
 	} else {
 		if(m_preMode[rank / m_size][rank % m_size])
 		{// 如果先前是编辑模式那么就是直接输入
@@ -76,8 +77,10 @@ void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)
 			for(int i = 0; i < m_size; ++i) m_user[rank / m_size][rank % m_size][i] = false;
 			f = true;
 		}
+		m_preMode[rank / m_size][rank % m_size] = false;
 	}
 	emit setNumMsg(rank, num, !f, editMode);
+	emit calHighlights(rank);
 }
 
 void LogicController::check()
@@ -123,7 +126,8 @@ void LogicController::calHighlights(int rank)
 			val = i + 1;
 		}
 	}
-	if(cnt != 1) { // 未填或多填
+	qDebug() << "LogicController::calHighlight, cnt is" << cnt;
+	if(cnt != 1 || m_preMode[row][col]) { // 未填或多填或标记模式
 		emit highlightGrids(rank, ans);
 		return;
 	}
@@ -139,35 +143,18 @@ void LogicController::calHighlights(int rank)
 
 void LogicController::calAnswer()
 {
+	for(int i = 0; i < m_size; ++i) {
+		for(int j = 0; j < m_size; ++j) {
+			for(int k = 0; k < m_size; ++k) {
+				m_user[i][j][k] = false;
+			}
+			m_user[i][j][m_ans[i][j] - 1] = true;
+		}
+	}
 	emit showAnswer(m_ans);
 }
 
-//void LogicController::setBtnActivated(int rank)
-//{
-//	m_activated = rank;
-//	QVector<int> btnRanks;
-//	int row = rank / 9;
-//	int col = rank % 9;
-//	for(int i = 0; i < GAMESIZE; ++i) {
-//		btnRanks.push_back(row * 9 + i);
-//		btnRanks.push_back(GAMESIZE * i + col);
-//	}
-
-//	for(int i = 0; i < GAMESIZE; ++i) {
-//		for(int j = 0; j < GAMESIZE; ++j) {
-//			if(m_user[i][j] == m_user[rank / GAMESIZE][rank % GAMESIZE]) {
-//				btnRanks.push_back(GAMESIZE * i + j);
-//			}
-//		}
-//	}
-//	emit highlightGrids(rank, btnRanks);
-//}
-
-//void LogicController::changeNum(int val, int row, int col)
-//{
-//	mat[row][col] = val;
-//	int collide = testCollide(row, col);
-//	if(collide != -1) {
-//		emit conflict(row * GAMESIZE + col, collide);
-//	}
-//}
+void LogicController::restartGame()
+{
+	startGame("10");
+}

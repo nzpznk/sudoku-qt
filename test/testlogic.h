@@ -18,6 +18,7 @@ void testLogic() {
 	QObject::connect(gameboard, SIGNAL(clearGridMsg(int)), logic, SLOT(clearGrid(int)));
 	QObject::connect(gameboard, SIGNAL(requestHighlight(int)), logic, SLOT(calHighlights(int)));
 	QObject::connect(gameboard, SIGNAL(getAnswer()), logic, SLOT(calAnswer()));
+	QObject::connect(gameboard, SIGNAL(restartMsg()), logic, SLOT(restartGame()));
 
 	QObject::connect(logic, SIGNAL(setNumMsg(int,int,bool,bool)), gameboard, SLOT(setNum(int,int,bool,bool)));
 	QObject::connect(logic, SIGNAL(showWrong(QVector<int>)), gameboard, SLOT(showWrong(QVector<int>)));
