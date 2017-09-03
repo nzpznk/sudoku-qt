@@ -8,7 +8,7 @@
 //#define LOADER
 //#define SUDOKUGRID
 //#define SOLVER
-#define GRIDBTN
+#define SUDOKUGRID
 
 #ifdef LOADER
 #include "loader/fileloader.h"
@@ -45,7 +45,6 @@ void testSukoduGrid() {
 	SudokuGrid* grid = new SudokuGrid;
 	QObject::connect(obj, SIGNAL(setProblem(QVector<QVector<int> >)), grid, SLOT(showProblem(QVector<QVector<int> >)));
 	QObject::connect(grid, SIGNAL(btnChosen(int)), obj, SLOT(setActivated(int)));
-	grid->show();
 	obj->show();
 }
 
@@ -57,7 +56,7 @@ int main(int argc, char** argv)
 //	testFileLoader(); // test pass;
 //	testSudokuGrid(); // test pass;
 //	testSolver();
-//	testSukoduGrid();
-	testGridBtn();
+	testSukoduGrid();
+//	testGridBtn();
 	return app.exec();
 }

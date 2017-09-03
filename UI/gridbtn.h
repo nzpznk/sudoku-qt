@@ -14,6 +14,7 @@ public:
 	GridBtn(QWidget* parent = 0);
 	void paintEvent(QPaintEvent*);
 	void highlight(bool isHighlight); // finish
+	void setSameNumHighlight(bool isSameNumHighLight);
 	void setChosen(bool isChosen); // highlight + special icon
 	void setCorrect(bool isCorrect); // finish
 	void add(int num, bool editMode); // finish
@@ -37,6 +38,7 @@ private:
 	bool m_arr[9];
 	bool m_editMode;
 	bool m_highlight;
+	bool m_sameNumHighlight;
 	bool m_chosen;
 	bool m_correct;
 };

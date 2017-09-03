@@ -16,21 +16,25 @@ class TestSukoduGrid : public QDialog
 public:
 	explicit TestSukoduGrid(QWidget *parent = 0);
 	~TestSukoduGrid();
+
 public slots:
-	void testSetProblem() {
-		FileLoader fl("./mat10.txt");
-		m_mat = fl.load();
-		m_user = m_mat;
-		emit setProblem(m_mat);
-	}
 	void setActivated(int rank);
 
 signals:
 	void setProblem(const QVector< QVector<int> >& mat);
 	void highlightGrids(int rank, const QVector<int>&);
+	void setNum(int rank, int val, bool isAdd, bool editMode);
 
 private slots:
 	void on_pushButton_clicked();
+
+	void on_pushButton_2_clicked();
+
+	void on_pushButton_3_clicked();
+
+	void on_pushButton_4_clicked();
+
+	void on_pushButton_5_clicked();
 
 private:
 	int m_activated;

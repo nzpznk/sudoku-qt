@@ -38,11 +38,11 @@ void SudokuGrid::showProblem(const QVector<QVector<int> >& mat)
 	qDebug() << "SukoduGrid show problem slot called";
 	for(int i = 0; i < mat.size(); ++i) {
 		for(int j = 0; j < mat[i].size(); ++j) {
+			m_btns[i][j]->clearState();
 			if(mat[i][j]) {
 				m_btns[i][j]->add(mat[i][j], false);
 			} else {
 				m_btns[i][j]->remove(0, true);
-				m_btns[i][j]->clearState();
 			}
 		}
 	}
@@ -68,21 +68,29 @@ void SudokuGrid::showWrongMsg(int rank)
 	qDebug() << "SukoduGrid showWrongMsg slot finished";
 }
 
-void SudokuGrid::highlightGrids(int rank, const QVector<int>& grids)
+void SudokuGrid::highlightGrids(int rank, const QVector<int>& sameNums)
 {
 	qDebug() << "SukoduGrid highlightGrid slot called";
-	for(int r : grids) {
-		m_btns[r / 9][r % 9]->highlight(true);
+	for(int i = 0; i < 9; ++i) {
+		for(int j = 0; j < 9; ++j) {
+			m_btns[i][j]->clearState();
+		}
 	}
+	for(int i = 0; i < 9; ++i) {
+		m_btns[i][rank % 9]->highlight(true);
+		m_btns[rank / 9][i]->highlight(true);
+	}
+	for(int r : sameNums) {
+		m_btns[r / 9][r % 9]->setSameNumHighlight(true);
+	}
+	m_btns[rank / 9][rank % 9]->setSameNumHighlight(true);
 	m_btns[rank / 9][rank % 9]->setChosen(true);
 	qDebug() << "SukoduGrid highlightGrid slot finished";
 }
 
-void SudokuGrid::clearState(const QVector<int>& grids)
+void SudokuGrid::clearGrid(int rank)
 {
 	qDebug() << "SukoduGrid clearState slot called";
-	for(int r : grids) {
-		m_btns[r / 9][r % 9]->clearState();
-	}
+	m_btns[rank / 9][rank % 9]->remove(0, true);
 	qDebug() << "SukoduGrid clearState slot finished";
 }

@@ -4,7 +4,7 @@
 #include <QPushButton>
 
 GridBtn::GridBtn(QWidget* parent) : \
-	QLabel(parent), m_chosen(false), m_correct(true), m_editMode(false), m_highlight(false)
+	QLabel(parent), m_chosen(false), m_correct(true), m_editMode(false), m_highlight(false), m_sameNumHighlight(false)
 {
 	for(int i = 0; i < 9; ++i) {
 		m_arr[i] = false;
@@ -24,7 +24,11 @@ void GridBtn::paintEvent(QPaintEvent*)
 	QPainter p(this);
 //	this->setFrameShape(QFrame::Box);
 	if(m_highlight) {
-		setStyleSheet(m_chosenColor);
+		if(m_sameNumHighlight) {
+			setStyleSheet(m_sameNumColor);
+		} else {
+			setStyleSheet(m_chosenColor);
+		}
 	} else {
 		setStyleSheet(m_normalColor);
 	}
@@ -56,6 +60,13 @@ void GridBtn::paintEvent(QPaintEvent*)
 void GridBtn::highlight(bool isHighlight)
 {
 	m_highlight = isHighlight;
+	update();
+}
+
+void GridBtn::setSameNumHighlight(bool isSameNumHighLight)
+{
+	m_highlight = true;
+	m_sameNumHighlight = isSameNumHighLight;
 	update();
 }
 
@@ -99,10 +110,11 @@ void GridBtn::remove(int num, bool allRemove)
 
 void GridBtn::clearState()
 {
-	m_editMode = false;
+	//m_editMode = false;
 	m_chosen = false;
 	m_correct = true;
 	m_highlight = false;
+	m_sameNumHighlight = false;
 	update();
 }
 

@@ -27,8 +27,8 @@ public slots:
 	void showProblem(const QVector< QVector<int> >& mat);
 	void setNum(int rank, int val, bool isAdd, bool editMode);
 	void showWrongMsg(int rank);
-	void highlightGrids(int rank, const QVector<int>& grids); // finish
-	void clearState(const QVector<int>& grids); // finish
+	void highlightGrids(int rank, const QVector<int>& sameNums); // finish
+	void clearGrid(int rank); // finish
 
 private:
 	QVector< QVector<GridBtn*> > m_btns;

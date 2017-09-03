@@ -36,12 +36,12 @@ SOURCES += \
 #    UI/mainwindow.cpp \
 #    UI/backupgameboard.cpp \
 #    UI/gameboard.cpp \
-#    UI/sudokugrid.cpp \
+    UI/sudokugrid.cpp \
     UI/gridbtn.cpp \
 #    UI/inputboard.cpp \
     test/test.cpp \
     test/logger.cpp \
-#    test/testsukodugrid.cpp
+    test/testsukodugrid.cpp
     test/testgridbtn.cpp
 
 HEADERS  += \
@@ -56,12 +56,12 @@ HEADERS  += \
 #    UI/mainwindow.h \
 #    UI/backupgameboard.h \
 #    UI/gameboard.h \
-#    UI/sudokugrid.h \
+    UI/sudokugrid.h \
     UI/gridbtn.h \
 #    UI/inputboard.h \
     test/logger.h \
     test/testsolver.h \
-#    test/testsukodugrid.h
+    test/testsukodugrid.h
     test/testgridbtn.h
 
 INCLUDEPATH += \
@@ -73,8 +73,8 @@ INCLUDEPATH += \
 
 FORMS += \
 #    UI/gameboard.ui \
-#    UI/sudokugrid.ui \
+    UI/sudokugrid.ui \
     test/testsukodugrid.ui \
-    test/testgridbtn.ui
+#    test/testgridbtn.ui
 #    UI/inputboard.ui \
 #    UI/mainwindow.ui
