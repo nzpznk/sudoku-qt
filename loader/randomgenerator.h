@@ -2,23 +2,19 @@
 #define RANDOMGENERATOR_H
 
 #include <QObject>
-#include <loader/loader.h>
+#include <QTime>
+#include "loader/loader.h"
+#include "solver/solver.h"
 
 class RandomGenerator : public Loader
 {
 public:
-	RandomGenerator();
+	RandomGenerator(int n);
 	QVector< QVector<int> > load();
 private:
-//	void generateRandomNumber()
-//	{
-//		qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-//		for(int i=0; i<10; i++)
-//		{
-//			int test =qrand()%10;
-//			qDebug()<<test;
-//		}
-//	}
+	void randomFill(int n);
+	int m_size;
+	QVector< QVector<int> > mat;
 };
 
 #endif // RANDOMGENERATOR_H

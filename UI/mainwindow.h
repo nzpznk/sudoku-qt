@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "UI/gameboard.h"
 
 namespace Ui {
 class MainWindow;
@@ -14,12 +15,16 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
+	void addGameBoard(GameBoard* w);
 
 signals:
-	void start(const QString& level);
+	void startGameMsg(const QString& level);
 
 private slots:
-	void on_pushButton_3_clicked();
+
+	void on_stackedWidget_currentChanged(int arg1);
+
+	void on_startBtn_clicked();
 
 private:
 	Ui::MainWindow *ui;

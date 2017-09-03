@@ -13,7 +13,18 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::addGameBoard(GameBoard* w)
 {
-	emit start("10");
+	ui->stackedWidget->addWidget(w);
+}
+
+void MainWindow::on_stackedWidget_currentChanged(int arg1)
+{
+
+}
+
+void MainWindow::on_startBtn_clicked()
+{
+	emit startGameMsg(ui->comboBox->currentText());
+	ui->stackedWidget->setCurrentIndex(1);
 }

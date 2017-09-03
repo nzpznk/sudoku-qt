@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "loader/fileloader.h"
+#include "loader/randomgenerator.h"
 #include <QStack>
 
 const int GAMESIZE = 9;

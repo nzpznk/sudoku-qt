@@ -13,5 +13,6 @@
     </qresource>
     <qresource prefix="/mat">
         <file>resources/mat/mat10.txt</file>
+        <file>resources/mat/mat9.txt</file>
     </qresource>
 </RCC>

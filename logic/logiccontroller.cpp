@@ -10,35 +10,36 @@ LogicController::LogicController(QObject *parent) : \
 void LogicController::startGame(QString level)
 {
 	m_game = level;
-	if(level == "random") {
-		// use random generator
-		return;
-	} else {
-		m_mat = FileLoader("./mat" + level + ".txt").load();
+	if(level == "Random") {
+		RandomGenerator loader(9);
+		m_mat = loader.load();
 		m_size = m_mat.size();
-		for(int i = 0; i < m_size; ++i) {
-			QVector< QVector<bool> > rowVec;
-			for(int j = 0; j < m_size; ++j) {
-				QVector<bool> record;
-				for(int k = 0; k < m_size; ++k) {
-					if(m_mat[i][j] == k + 1) record.push_back(true);
-					else record.push_back(false);
-				}
-				rowVec.push_back(record);
-			}
-			m_user.push_back(rowVec);
-		}
-		for(int i = 0; i < m_size; ++i) {
-			QVector<bool> prev;
-			for(int j = 0; j < m_size; ++j) {
-				prev.push_back(false);
-			}
-			m_preMode.push_back(prev);
-		}
-		emit showProblem(m_mat);
-		Solver sol;
-		m_ans = sol(m_mat)[0];
+	} else {
+		m_mat = FileLoader(":/mat/resources/mat/mat" + level + ".txt").load();
+		m_size = m_mat.size();
 	}
+	for(int i = 0; i < m_size; ++i) {
+		QVector< QVector<bool> > rowVec;
+		for(int j = 0; j < m_size; ++j) {
+			QVector<bool> record;
+			for(int k = 0; k < m_size; ++k) {
+				if(m_mat[i][j] == k + 1) record.push_back(true);
+				else record.push_back(false);
+			}
+			rowVec.push_back(record);
+		}
+		m_user.push_back(rowVec);
+	}
+	for(int i = 0; i < m_size; ++i) {
+		QVector<bool> prev;
+		for(int j = 0; j < m_size; ++j) {
+			prev.push_back(false);
+		}
+		m_preMode.push_back(prev);
+	}
+	emit showProblem(m_mat);
+	Solver sol;
+	m_ans = sol(m_mat)[0];
 }
 
 void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)

@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,9">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,6,0,0,0,0,0,2,2,2,0">

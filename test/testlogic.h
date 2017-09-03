@@ -28,8 +28,8 @@ void testLogic() {
 	QObject::connect(logic, SIGNAL(highlightGrids(int,QVector<int>)), gameboard, SLOT(highlightGrids(int,QVector<int>)));
 	QObject::connect(logic, SIGNAL(showAnswer(QVector<QVector<int> >)), gameboard, SLOT(showAnswer(QVector<QVector<int> >)));
 
-	QObject::connect(window, SIGNAL(start(QString)), logic, SLOT(startGame(QString)));
-	gameboard->show();
+	QObject::connect(window, SIGNAL(startGameMsg(QString)), logic, SLOT(startGame(QString)));
+	window->addGameBoard(gameboard);
 	window->show();
 }
 
