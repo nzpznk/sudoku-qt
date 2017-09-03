@@ -3,9 +3,15 @@
 
 GameBoard::GameBoard(QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::GameBoard)
+	ui(new Ui::GameBoard),
+	m_btnChosen(-1),
+	m_isStopped(false)
 {
 	ui->setupUi(this);
+	time = QTime::fromString("00:00:00", "hh:mm:ss");
+	timer = new QTimer(this);
+	timer->start(1000);
+	connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 	connect(ui->sudokugrid, SIGNAL(btnChosen(int)), this, SLOT(setBtnChosen(int)));
 	connect(ui->numberboard, SIGNAL(oper(InputBoard::OPERATION, int)), \
 			this, SLOT(on_receive_operation(InputBoard::OPERATION, int)));
@@ -51,6 +57,7 @@ void GameBoard::clearGrid(int rank)
 void GameBoard::on_receive_operation(InputBoard::OPERATION op, int num)
 {
 	qDebug() << "received operation" << "op = " << op << "number = " << num;
+	if(m_btnChosen == -1) return;
 	if (op == InputBoard::CHECK) {
 		emit check();
 		return;
@@ -80,26 +87,27 @@ void GameBoard::setBtnChosen(int rank)
 	emit requestHighlight(rank);
 }
 
-//void GameBoard::setOperation(InputBoard::OPERATION op, int num) // unfinished
-//{
-//	switch(op){
-//	case InputBoard::ADD:
-//		operHistory.append(QPair("add", num));
-//		emit setNum(m_btnChosen, num); break;
-//	case InputBoard::REMOVE:
-//		emit clearGridMsg(m_btnChosen); break;
-//	case InputBoard::CHECK:
-//		emit check();
-//	}
-//}
-
-//void GameBoard::undo()
-//{
-
-//}
-
 void GameBoard::on_pushButton_clicked()
 {
 	qDebug() << "requesting answer";
 	emit getAnswer();
+}
+
+void GameBoard::updateTime()
+{
+	// qDebug() << "GameBoard::updateTime() called";
+	ui->timeLCD->display(time.toString("hh:mm:ss"));
+	time = time.addSecs(1);
+	qDebug() << time.toString("hh:mm:ss");
+}
+
+void GameBoard::on_startpausebtn_clicked()
+{
+	if(m_isStopped) {
+		timer->start(1000);
+		m_isStopped = false;
+	} else {
+		timer->stop();
+		m_isStopped = true;
+	}
 }

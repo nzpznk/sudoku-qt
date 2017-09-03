@@ -2,8 +2,9 @@
 #define GAMEBOARD_H
 
 #include <QWidget>
-#include <QLinkedList>
-
+#include <QDateTime>
+#include <QTimer>
+#include <QTime>
 #include "sudokugrid.h"
 #include "inputboard.h"
 
@@ -44,10 +45,16 @@ private slots: // connect with GUI
 	void setBtnChosen(int rank); // show the btn chosen
 	void on_receive_operation(InputBoard::OPERATION op, int num);
 	void on_pushButton_clicked();
+	void updateTime();
+
+	void on_startpausebtn_clicked();
 
 private:
 	int m_btnChosen;
-	QLinkedList< QPair<QString, int> > operHistory;
+	QTime time;
+	QTimer* timer;
+	bool m_isStopped;
+//	QLinkedList< QPair<QString, int> > operHistory;
 	Ui::GameBoard *ui;
 };
 
