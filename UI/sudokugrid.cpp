@@ -91,9 +91,9 @@ void SudokuGrid::highlightGrids(int rank, const QVector<int>& sameNums)
 
 void SudokuGrid::clearGrid(int rank)
 {
-	qDebug() << "SukoduGrid clearState slot called";
+	qDebug() << "SukoduGrid clearGrid function called";
 	m_btns[rank / 9][rank % 9]->remove(0, true);
-	qDebug() << "SukoduGrid clearState slot finished";
+	qDebug() << "SukoduGrid clearGrid function finished";
 }
 
 void SudokuGrid::showAnswer(const QVector<QVector<int> >& ans)

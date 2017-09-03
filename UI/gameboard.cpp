@@ -56,7 +56,7 @@ void GameBoard::on_receive_operation(InputBoard::OPERATION op, int num)
 		return;
 	}
 	else if (op == InputBoard::REMOVE) {
-		emit clearGrid(m_btnChosen);
+		emit clearGridMsg(m_btnChosen);
 		return;
 	}
 	bool isAdd = false;
@@ -87,7 +87,7 @@ void GameBoard::setBtnChosen(int rank)
 //		operHistory.append(QPair("add", num));
 //		emit setNum(m_btnChosen, num); break;
 //	case InputBoard::REMOVE:
-//		emit clearGrid(m_btnChosen); break;
+//		emit clearGridMsg(m_btnChosen); break;
 //	case InputBoard::CHECK:
 //		emit check();
 //	}

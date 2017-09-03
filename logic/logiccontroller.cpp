@@ -44,9 +44,14 @@ void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)
 {
 	bool isRemove = !isAdd;
 	bool f = false;
+	if(m_mat[rank / m_size][rank % m_size]) return;
 	if(isRemove) {
-		m_user[rank / m_size][rank % m_size][num - 1] = false;
-		f = true;
+		if(m_mat[rank / m_size][rank % m_size]) { // 题面不能被删除
+			return;
+		} else {
+			m_user[rank / m_size][rank % m_size][num - 1] = false;
+			f = true;
+		}
 	} else if(editMode) {
 		if(m_preMode[rank / m_size][rank % m_size] && \
 			m_user[rank / m_size][rank % m_size][num - 1]) // 如果先前也是编辑模式而且有这个数，其实是移除
@@ -63,7 +68,7 @@ void LogicController::setNum(int rank, int num, bool isAdd, bool editMode)
 			for(int i = 0; i < m_size; ++i) m_user[rank / m_size][rank % m_size][i] = false;
 			m_user[rank / m_size][rank % m_size][num - 1] = true;
 			f = false;
-		} else if(m_user[rank / m_size][rank % m_size][num - 1]) {// 先前是输入模式且没有这个数
+		} else if(!m_user[rank / m_size][rank % m_size][num - 1]) {// 先前是输入模式且没有这个数
 			for(int i = 0; i < m_size; ++i) m_user[rank / m_size][rank % m_size][i] = false;
 			m_user[rank / m_size][rank % m_size][num - 1] = true;
 			f = false;
@@ -93,12 +98,15 @@ void LogicController::check()
 
 void LogicController::clearGrid(int rank)
 {
+	qDebug() << "LogicController::clearGrid called";
 	int row = rank / m_size;
 	int col = rank % m_size;
+	if(m_mat[row][col]) return;
 	for(int i = 0; i < m_size; ++i) {
 		m_user[row][col][i] = false;
 	}
 	emit clearGridMsg(rank);
+	qDebug() << "LogicController::clearGrid finished";
 }
 
 void LogicController::calHighlights(int rank)
