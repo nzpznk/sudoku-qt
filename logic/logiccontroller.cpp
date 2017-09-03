@@ -9,6 +9,7 @@ LogicController::LogicController(QObject *parent) : \
 
 void LogicController::startGame(QString level)
 {
+	m_game = level;
 	if(level == "random") {
 		// use random generator
 		return;
@@ -156,5 +157,9 @@ void LogicController::calAnswer()
 
 void LogicController::restartGame()
 {
-	startGame("10");
+	QVector< QVector<bool> > v;
+	m_preMode = v;
+	QVector< QVector< QVector<bool> > > u;
+	m_user = u;
+	startGame(m_game);
 }

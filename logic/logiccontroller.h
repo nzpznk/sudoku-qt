@@ -38,6 +38,7 @@ public slots:
 	// void setNum(int val, int rank); // store the user's operation including add and remove
 	// void changeNum(int val, int row, int col);
 private:
+	QString m_game;
 	QVector< QVector<int> > m_mat;
 	QVector< QVector< QVector<bool> > > m_user;
 	QVector< QVector<int> > m_ans;

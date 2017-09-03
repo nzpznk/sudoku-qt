@@ -2,9 +2,9 @@
 #define GAMEBOARD_H
 
 #include <QWidget>
-#include <QDateTime>
 #include <QTimer>
 #include <QTime>
+#include <QIcon>
 #include "sudokugrid.h"
 #include "inputboard.h"
 
@@ -58,6 +58,8 @@ private:
 	QTime time;
 	QTimer* timer;
 	bool m_isStopped;
+	QIcon m_startIcon;
+	QIcon m_pauseIcon;
 //	QLinkedList< QPair<QString, int> > operHistory;
 	Ui::GameBoard *ui;
 };

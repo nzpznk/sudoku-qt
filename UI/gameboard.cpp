@@ -8,6 +8,11 @@ GameBoard::GameBoard(QWidget *parent) :
 	m_isStopped(false)
 {
 	ui->setupUi(this);
+	ui->startpausebtn->setIconSize(QSize(40, 40));
+	m_startIcon = QIcon(":/icon/resources/icons/start.png");
+	m_pauseIcon = QIcon(":/icon/resources/icons/pause.png");
+	ui->startpausebtn->setIcon(m_pauseIcon);
+	timer = new QTimer(this);
 	initTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 	connect(ui->sudokugrid, SIGNAL(btnChosen(int)), this, SLOT(setBtnChosen(int)));
@@ -54,6 +59,7 @@ void GameBoard::clearGrid(int rank)
 
 void GameBoard::on_receive_operation(InputBoard::OPERATION op, int num)
 {
+	if(m_isStopped) return;
 	qDebug() << "received operation" << "op = " << op << "number = " << num;
 	if(m_btnChosen == -1) return;
 	if (op == InputBoard::CHECK) {
@@ -80,6 +86,7 @@ void GameBoard::on_receive_operation(InputBoard::OPERATION op, int num)
 
 void GameBoard::setBtnChosen(int rank)
 {
+	if(m_isStopped) return;
 	qDebug() << "chose btn" << rank;
 	m_btnChosen = rank;
 	emit requestHighlight(rank);
@@ -87,6 +94,7 @@ void GameBoard::setBtnChosen(int rank)
 
 void GameBoard::on_pushButton_clicked()
 {
+	if(m_isStopped) return;
 	qDebug() << "requesting answer";
 	emit getAnswer();
 }
@@ -104,9 +112,11 @@ void GameBoard::on_startpausebtn_clicked()
 	if(m_isStopped) {
 		timer->start(1000);
 		m_isStopped = false;
+		ui->startpausebtn->setIcon(m_pauseIcon);
 	} else {
 		timer->stop();
 		m_isStopped = true;
+		ui->startpausebtn->setIcon(m_startIcon);
 	}
 }
 
@@ -119,6 +129,6 @@ void GameBoard::on_restart_clicked()
 void GameBoard::initTimer()
 {
 	time = QTime::fromString("00:00:00", "hh:mm:ss");
-	timer = new QTimer(this);
-	timer->start(1000);
+	ui->timeLCD->display(time.toString("hh:mm:ss"));
+	if(!m_isStopped) timer->start(1000);
 }
