@@ -54,6 +54,7 @@ void GameBoard::showAnswer(const QVector<QVector<int> >& ans)
 
 void GameBoard::setNum(int rank, int num, bool isAdd, bool editMode)
 {
+	m_btnChosen = rank;
 	ui->sudokugrid->setNum(rank, num, isAdd, editMode);
 }
 
