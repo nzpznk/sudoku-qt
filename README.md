@@ -29,11 +29,11 @@ A qt version sudoku game.
 
 1. 能对格子选中，高亮，标记，显示是否错误
 
-![](./show/show1.png)
+![](/show/show1.png)
 
 2. 能够高效而正确地求解
 
-![](./show/show2.png)
+![](/show/show2.png)
 
 ## 模块划分：
 
