@@ -12,7 +12,10 @@
         <file>resources/icons/undo.png</file>
     </qresource>
     <qresource prefix="/mat">
-        <file>resources/mat/mat10.txt</file>
-        <file>resources/mat/mat9.txt</file>
+        <file>resources/mat/mat1.txt</file>
+        <file>resources/mat/mat2.txt</file>
+        <file>resources/mat/mat3.txt</file>
+        <file>resources/mat/mat4.txt</file>
+        <file>resources/mat/mat5.txt</file>
     </qresource>
 </RCC>

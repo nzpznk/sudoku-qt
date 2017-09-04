@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-#    main.cpp\
+    main.cpp\
     loader/loader.cpp \
     loader/fileloader.cpp \
     logic/logiccontroller.cpp \
@@ -41,7 +41,8 @@ SOURCES += \
     test/testsukodugrid.cpp \
     test/testinput.cpp \
     UI/mainwindow.cpp \
-    loader/randomgenerator.cpp
+    loader/randomgenerator.cpp \
+    test/testgridbtn.cpp
     test/testgridbtn.cpp
 
 HEADERS  += \
@@ -64,7 +65,8 @@ HEADERS  += \
     test/testgameboard.h \
     test/testlogic.h \
     UI/mainwindow.h \
-    loader/randomgenerator.h
+    loader/randomgenerator.h \
+    test/testgridbtn.h
     test/testgridbtn.h
 
 INCLUDEPATH += \

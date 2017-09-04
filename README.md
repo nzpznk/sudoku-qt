@@ -1,146 +1,79 @@
 ﻿# sudoku-qt
 A qt version sudoku game.
 
-## gameboard界面
+## 实现功能：
 
-### 想法
+1. 实现标准9X9布局，响应鼠标点击。
 
-1. （DONE）写一个for循环，将格子存在一个数组中
+2. 点击选中方格可对选中方格填数，通过选中数字按钮进行填数。
 
-2. 给定一个数独矩阵显示出来
+3. 实现重玩、暂停功能（暂停时计时停止，方格不可选中）
 
-3. 边框线的绘制
+4. 实现关卡选择（10+个不同难度的关卡）（难度可使用初始空格的数目，或是其他合理方式确定）
 
-4. 尺寸的弹性控制（line edit)
+5. 实现撤销、恢复功能（支持撤销10步）
 
-### gameboard 部分职责
+6. 实现删除功能。
 
-1. （DONE）line_edit的valueChange信号的映射
+7. 点击数字亮显当前界面所有相同数字，高亮选中数字所在行列
 
-2. 对用户输入的响应(错误输入(冲突输入)弹出警告)
+8. 支持标记和输入量中模式，标记模式下方格内填多个数字。
 
-## gameboard 部分的api
+9. 能正确判定当前填入数字中是否有错误并指出
 
-1. signals:
-  - （DONE）setNumber(int value, int row, int column)
+10. 数独问题产生器，可以随机产生数独游戏
 
-2. slots:
-  - showWarning(int row, int column, QString& msg)
-  - initialize(matrix)
-  //- undo() 通过维护一个操作栈实现
-  //- restart()
+11. 数独问题求解器。
 
-### 用例设想：
+## 运行效果：
 
-1. 初始的时候展示 9 * 9 方格, 所有的line_edit都是禁用状态，被调用initialize槽的时候进行初始化
+1. 能对格子选中，高亮，标记，显示是否错误
 
-2. 用户每填充一个格子都检查合法性，如果合法(是1~9的数字)就发送一个setNumber()的signal
+![](./show/show1.png)
 
-3. 当showMessage()槽被调用的时候，相关的log出相应的警示信息
+2. 能够高效而正确地求解
 
+![](./show/show2.png)
 
+## 模块划分：
 
+### 主逻辑 (`./logic` 文件夹下)
 
+| 类 | 功能 |
+| -- | -- |
+| LogicController | 控制游戏主逻辑，诸如重玩，撤销与回撤，正确性检查，发送信号更新界面 |
 
-## 数独逻辑部分：
+### 界面 (`./UI` 文件夹下)
 
-### api:
+| 类 | 功能 |
+| -- | -- |
+| MainWindow | 用于选择关卡 |
+| GameBoard | 游戏界面 |
+| SudokuGrid | 数独格子组件 |
+| Inputboard | 输入数字框组件 |
+| GridBtn | 继承QLabel而写成的按钮控件 |
 
-1. signals:
-  - initGame(matrix)
-  - congratulation()
-  - （DONE）conflict(int row, int column, QString& message)
+### 求解器 （`./solver` 文件夹下）
 
-2. slots:
-  - （DONE	）changeNum(int value, int row, int column)
+| 类 | 功能 |
+| -- | -- |
+| Solver | Algorithm X 的抽象算法，实现为一个函数对象，通过调用DancingLinks接口描述
+| DancingLinks | 实现dancinglinks基本操作，数据底层操作调用DLNodesContainer的实现 |
+| DLNodesContainer | 链表节点的容器，规定了DancingLinks操作所需的底层基本操作，继承重写可以实现不同种类数独 |
+| StdSudokuNodesContainer | 用于表示9 x 9标准数独的DLNodesContainer |
 
-### 用例设想：
+### 数独加载 (`./loader` 文件夹下)
 
-1. 每接收到一个setNumber() 的signal，调用changeNum设置这个数字，并判断是否发生了冲突
+| 类 | 功能 |
+| -- | -- |
+| Loader | 所有加载器的基类，暴露唯一对外界有用的接口`Loader::load()`方法 |
+| FileLoader | 通过磁盘文件资源进行加载，实现功能中的关卡设计 |
+| RandomGenerator | 随机生成数独游戏 |
 
-2. 如果发生冲突，发射一个conflit(int rank1, int rank2)的signal
+## 关于求解与生成算法
 
-3. 判断是否游戏结束，如果结束就发射congratulation()信号
+1. 求解算法使用dancinglinks数据结构，使用 [Algorithm X](https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X) 进行求解
 
+2. 生成算法使用知乎用户提供的[一种方法](https://www.zhihu.com/question/22043229)：(1) 随机生成11个位置，调用solver计算一个解答形成终盘。(2) 之后随机挖洞，每挖一个洞调用 [Algorithm X](https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X) 判断解答是否唯一，如果不唯一就回溯
 
-
-
-
-
-
-## 数独生成器部分：
-
-### 职责：
-
-1. 通过给定的难度生成一个解答矩阵和mask列表
-
-【生成】的过程是随机的。
-一、生成过程如下：（现在出题一般都由计算机完成）
-0、求解子程序。这个子程序可用dancing links算法，不是逻辑解法。可以在非唯一解的情况下找到任意一个解。
-1、随机放入11个数，用0中的子程序求任意解生成终盘。（相关研究表明，放入11个数，有解的概率约99.7%，12个数有解概率降低不少，10个数虽然概率更高，但求解时间增长。故11个合适。）
-2、生成终盘后，不断随机挖掉一个数。每次挖掉一个数，检查是否存在唯一解。方法：如果挖掉一个1，在该方格中依次填入2～9，调用0中的子程序求解。
-3、判断难度。比较简单的方法是，计算每一个空格有多少个候选数，总候选数越多，可能越难。不保证有逻辑解。
-高端一点的方法是，另写一个逻辑求解子程序，给各种逻辑解法打分，如各种排除法1.x，各种wing2.x，更高的可能有6.x等等。总分数越高，代表越难。
-
-题主所说的保证有逻辑解，并提高难度，肯定不是靠人脑。
-而是由机器批量出题，再评定难度。
-依陈岑老师的说法，前两年的“最难数独”难度为10.7，现在出现了11+的。可能每出几万道题才能碰上一个8+的。所以只能靠机器了。
-
-作者：单想
-链接：https://www.zhihu.com/question/22043229/answer/44315364
-来源：知乎
-著作权归作者所有，转载请联系作者获得授权。
-
-
-
-
-
-
-
-## Solver 部分
-
-### 职责：
-
-1. 接受一个数独矩阵
-
-2. 构建描述数独的dancing links
-
-3. 使用算法X求解
-
-### api：
-
-1. 接受一个matrix构造一个solver
-
-2. 一个solve(matrix)的函数，用于求解
-
-3. 如果唯一解，返回解答，否则返回一个特定值
-
-4. 一个动态插入填入数据的接口insert()，动态删除数据的接口remove()
-
-
-
-
-
-
-
-
-## Dancing Links
-
-### api：
-
-1. construct() 构造一个完整的dl
-
-2. choose(val, i, j) 返回一个vector包含所有被移除的行和列
-
-// 隐含removeRow() removeCol()
-
-3. backtrack() 用于将上一步改动复位
-
-
-
-
-
-
-
-
-
+3. 随机生成难度控制：可以通过生成步骤(2)中的随机尝试次数进行控制，实验发现尝试次数30次左右可以产生简单难度的数独，尝试次数达到接近100次左右数独的空格数可以达到50个左右，效果相当显著
